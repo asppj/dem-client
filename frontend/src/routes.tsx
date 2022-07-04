@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import routes, { Home, About, NotFound } from './config/routes'
 
 const Router = () => {
@@ -7,13 +7,13 @@ const Router = () => {
     return <Route key={item.path} {...item} element={<item.element/>}/>
   })
   return ( 
-    <BrowserRouter>
+    <HashRouter>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           {myRoutes}
         </Routes>
       </Suspense>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
