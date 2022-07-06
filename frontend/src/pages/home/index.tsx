@@ -60,6 +60,14 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
+				<form>
+					<div className="text-gray-400 focus-within:text-gray-600">
+						<div className="">
+							<svg fill="currentColor"></svg>
+						</div>
+						<input className="focus:ring-2 focus:ring-gray-300 " />
+					</div>
+				</form>
 			</div>
 
 		</>
