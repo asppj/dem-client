@@ -37,7 +37,13 @@ const routes = [
 		element: NotFound,
 		name: '404',
 		svg: HomeSVG.DashboardSVG,
-		tree: []
+		tree: [{
+			path: '/',
+			element: About,
+			name: 'Home',
+			svg: HomeSVG.HomeSvg,
+			tree: [],
+		}]
 	},
 ]
 export default routes
