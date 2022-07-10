@@ -1,17 +1,131 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import AppRouter from "./routes";
-import { HashRouter as GlobalRouter } from "react-router-dom";
-import AppMenu from "./pages/layout";
-import routes from "./config/routes";
-export default function App() {
-	const titleName="Dem Client"
+
+import AppRouter from '@/routes'
+import React, { useEffect, useState } from 'react'
+import { Link, Route, useLocation, useNavigate } from 'react-router-dom'
+import routes from '../../config/routes'
+import { DownArrow, UpArrow } from '../svgs/home'
+import { Layout } from './namespace'
+
+
+function classNames(...classes: any) {
+	return classes.filter(Boolean).join(' ')
+}
+
+
+
+export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
+	// const myRoutes = routes.map((item) => {
+	// 	return <Route key={item.path} {...item} element={<item.element />} />
+	// })
+	// const navigation = routes.map((route: RouteItem, idx: number) => {
+	// 	if (idx == 0) {
+	// 		return { name: route.name, path: route.path, current: true, element: route.element }
+	// 	}
+	// 	return { name: route.name, path: route.path, current: false, element: route.element }
+	// })
+	// 点击菜单
+
+	const [menuCurrent, selectMenu] = useState<number>(-1) // 默认都不选中
+	const navCurrent = useLocation()
+	console.log("current", navCurrent)
+	// useEffect
+	useEffect(() => {
+		routes.map((route, index) => {
+			if (navCurrent.pathname === route.path) {
+				selectMenu(index)
+			}
+		})
+	}, [navCurrent])
+
+	// 菜单项
+	const MenuMobile = () => {
+		const ChildrenMenu = (props: { tree: RouteItem[] }) => {
+			const MenuChildren = props.tree.map((item) => {
+				return <>
+					<>
+						<div onClick={() => setProduct(!product)} key={item.path}>
+							{product ? (
+								<div className=" ml-4">
+									{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-up" width={14} height={14} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<polyline points="6 15 12 9 18 15" />
+															</svg> */}
+									<UpArrow></UpArrow>
+								</div>
+							) : (
+								<div className="ml-4">
+									{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-down" width={14} height={14} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																<polyline points="6 9 12 15 18 9" />
+															</svg> */}
+									<DownArrow></DownArrow>
+								</div>
+							)}
+						</div>
+						{product ? (
+							<div>
+								<ul className="my-3">
+									<li className="text-sm text-indigo-500 py-2 px-6">Best Sellers</li>
+									<li className="text-sm text-gray-800 hover:text-indigo-500 py-2 px-6">Out of Stock</li>
+									<li className="text-sm text-gray-800 hover:text-indigo-500 py-2 px-6">New Products</li>
+								</ul>
+							</div>
+						) : (
+							""
+						)}
+					</>
+				</>
+			})
+			return <>
+				{MenuChildren}
+			</>
+		}
+		return <>
+			<ul className="f-m-m">
+				{
+					routes.map((route: RouteItem, index: number) => {
+						const active = menuCurrent !== index;
+						const [product, setProduct] = useState(false);
+						if (route.element) {
+							return (
+								<>
+									<a href="#" onClick={() => { console.log("click事件", route.name, route.name); selectMenu(index) }}>
+										{/* <li className=" text-white pt-8"> */}
+										<Link to={route.path}>
+											<li className={active ? "text-gray-800 text-lg  p-2 hover:bg-blue-50" : " bg-gray-50  ml-2 scale-105 p-2 hover:ring-1 hover:ring-blue-200"}>
+												<div className="flex items-center space-x-2">
+													<div className="md:w-6 md:h-6 w-5 h-5 text-blue-400">
+														{route.svg ? <route.svg /> : <></>}
+													</div>
+													<p className={active ? " text-black-800 text-lg " : "text-indigo-800 text-lg underline underline-offset-4"}>
+														{route.name}
+													</p>
+												</div>
+											</li>
+										</Link>
+									</a>
+									<ChildrenMenu tree={route.tree} />
+								</>
+							)
+						}
+					})
+				}
+
+			</ul>
+		</>
+	}
+	const MenuPC = () => {
+		return <></>
+	}
+
+
+	const titleName = "Dem Client"
 	const [show, setShow] = useState(false);
 	const [product, setProduct] = useState(false);
 	const [deliverables, setDeliverables] = useState(false);
 	const [profile, setProfile] = useState(false);
 	return (
-		<GlobalRouter>
+		<>
 			<div className="absolute bg-gray-200 w-full h-full">
 				{/* Navigation starts */}
 				{/* Mobile */}
@@ -40,8 +154,10 @@ export default function App() {
 										</svg>
 									</div>
 								</div>
+								{/*  sidecar menu */}
+								<MenuMobile />
 								<ul className="f-m-m">
-									<a href="#" onClick={() => {console.log("click")}}>
+									<a href="#" onClick={() => { console.log("click") }}>
 										<li className="text-white pt-8">
 											<div className="flex items-center">
 												<div className="md:w-6 md:h-6 w-5 h-5">
@@ -77,22 +193,24 @@ export default function App() {
 													<p className="text-gray-700 ml-3 text-lg">
 														{/* Products */}
 														<Link to="/about">Products</Link>
-														</p>
+													</p>
 												</div>
 												<div onClick={() => setProduct(!product)}>
 													{product ? (
 														<div className=" ml-4">
-															<svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-up" width={14} height={14} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+															{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-up" width={14} height={14} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
 																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 																<polyline points="6 15 12 9 18 15" />
-															</svg>
+															</svg> */}
+															<UpArrow></UpArrow>
 														</div>
 													) : (
 														<div className="ml-4">
-															<svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-down" width={14} height={14} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+															{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-down" width={14} height={14} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
 																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 																<polyline points="6 9 12 15 18 9" />
-															</svg>
+															</svg> */}
+															<DownArrow></DownArrow>
 														</div>
 													)}
 												</div>
@@ -229,7 +347,7 @@ export default function App() {
 								<li className="cursor-pointer h-full flex items-center text-sm text-indigo-700 tracking-normal border-b-2 border-indigo-700">
 									{/* Dashboard */}
 									<Link to="/404">Dashboard</Link>
-									</li>
+								</li>
 								<li className="cursor-pointer h-full flex items-center text-sm text-gry-800 mx-10 tracking-normal">Products</li>
 								<li className="cursor-pointer h-full flex items-center text-sm text-gry-800 mr-10 tracking-normal">Performance</li>
 								<li className="cursor-pointer h-full flex items-center text-sm text-gray-800 tracking-normal">Deliverables</li>
@@ -321,7 +439,7 @@ export default function App() {
 										<span className="ml-2">
 											<Link to="/404">Dashboard</Link>
 											{/* Dashboard */}
-											</span>
+										</span>
 									</div>
 								</li>
 								<li className="flex xl:hidden  cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-2 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none flex items-center relative">
@@ -401,7 +519,8 @@ export default function App() {
 					}</div>
 				</div>
 			</div>
-			<AppMenu routes={routes}></AppMenu>
-		</GlobalRouter>
-	);
+		</>
+	)
 }
+
+

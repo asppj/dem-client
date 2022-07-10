@@ -29,6 +29,7 @@ import { Button } from 'antd'
 // }
 
 import React from 'react'
+// import MyDisclosure from './components/demo';
 
 export default function Home() {
 	const cardTitle = "ChitChat";
@@ -36,6 +37,7 @@ export default function Home() {
 	const logoRef = logo;
 	return (
 		<>
+		<MyDisclosure/>
 			<div className="container mx-4 my-2 px-4 py-2">
 				<div className="decoration-clone  bg-gradient-to-b from-yellow-400 to-red-500">
 					Home
