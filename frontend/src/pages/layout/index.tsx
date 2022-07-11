@@ -39,70 +39,108 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 
 	// 菜单项
 	const MenuMobile = () => {
-		const ChildrenMenu = (props: { tree: RouteItem[] }) => {
-			const MenuChildren = props.tree.map((item) => {
-				const [showChild, setShowChild] = useState(false);
-				return <>
-						<div className="flex items-center space-x-1" onClick={() => setShowChild(!showChild)} key={item.path}>
-							{showChild ? (
-								<div className=" ml-6">
-									{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-up" width={14} height={14} viewBox="0 0 24 24" stroke-width={1} stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-																<polyline points="6 15 12 9 18 15" />
-															</svg> */}
-									<UpArrow></UpArrow>
-								</div>
-							) : (
-								<div className="ml-4">
-									{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-down" width={14} height={14} viewBox="0 0 24 24" stroke-width={1} stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-																<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-																<polyline points="6 9 12 15 18 9" />
-															</svg> */}
-									<DownArrow></DownArrow>
-								</div>
-							)}
-						</div>
-						{showChild ? (
-							<div>
-								<ul className="my-3">
-									<li className="text-sm text-indigo-500 py-2 px-6">Best Sellers</li>
-									<li className="text-sm text-gray-800 hover:text-indigo-500 py-2 px-6">Out of Stock</li>
-									<li className="text-sm text-gray-800 hover:text-indigo-500 py-2 px-6">New Products</li>
-								</ul>
-							</div>
-						) : (
-							""
-						)}
-				</>
-			})
-			return <>
-				{MenuChildren}
-			</>
-		}
+		// const ChildrenMenu = (props: { tree: RouteItem[] }) => {
+		// 	// return props.tree.map((item) => {
+		// 	// 	const [showChild, setShowChild] = useState(false);
+		// 	// 	return <>
+		// 	// 			<div className="flex items-center space-x-1" onClick={(e) =>{ console.log(e);setShowChild(!showChild)}} key={item.path}>
+		// 	// 				{showChild ? (
+		// 	// 					<div className=" ml-6">
+		// 	// 						{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-up" width={14} height={14} viewBox="0 0 24 24" stroke-width={1} stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+		// 	// 													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+		// 	// 													<polyline points="6 15 12 9 18 15" />
+		// 	// 												</svg> */}
+		// 	// 						<UpArrow></UpArrow>
+		// 	// 					</div>
+		// 	// 				) : (
+		// 	// 					<div className="ml-4">
+		// 	// 						{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-down" width={14} height={14} viewBox="0 0 24 24" stroke-width={1} stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+		// 	// 													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+		// 	// 													<polyline points="6 9 12 15 18 9" />
+		// 	// 												</svg> */}
+		// 	// 						<DownArrow></DownArrow>
+		// 	// 					</div>
+		// 	// 				)}
+		// 	// 			</div>
+		// 	// 			{showChild ? (
+		// 	// 				<div>
+		// 	// 					<ul className="my-3">
+		// 	// 						<li className="text-sm text-indigo-500 py-2 px-6">Best Sellers</li>
+		// 	// 						<li className="text-sm text-gray-800 hover:text-indigo-500 py-2 px-6">Out of Stock</li>
+		// 	// 						<li className="text-sm text-gray-800 hover:text-indigo-500 py-2 px-6">New Products</li>
+		// 	// 					</ul>
+		// 	// 				</div>
+		// 	// 			) : (
+		// 	// 				""
+		// 	// 			)}
+		// 	// 	</>
+		// 	// })
+		// }
 		return <>
 			<ul className="f-m-m">
 				{
 					routes.map((route: RouteItem, index: number) => {
 						const active = menuCurrent !== index;
 						const [product, setProduct] = useState(false);
+						const setProductFn = (checked: boolean) => {
+							console.log("切换 product is", checked)
+							setProduct(checked)
+						}
+						console.log("product is", product)
 						return (
 							<div key={route.name} >
-								<a className="flex items-center" href="#" onClick={() => { console.log("click事件", route.name, route.name); selectMenu(index) }}>
+								<div className="flex items-center" onClick={() => { console.log("click事件", route.name, route.name, product); selectMenu(index) }}>
 									{/* <li className=" text-white pt-8"> */}
-									<Link to={route.path}>
-										<li className={active ? "text-gray-800 text-lg  p-2 hover:bg-blue-50" : " bg-gray-50  ml-2 scale-105 p-2 hover:ring-1 hover:ring-blue-200"}>
-											<div className="flex items-center space-x-2">
+									<li className={active ? "text-gray-800 text-lg  p-2 hover:bg-blue-50" : " bg-gray-50  ml-2 scale-105 p-2 hover:ring-1 hover:ring-blue-200"}>
+										<div className="flex items-center space-x-2">
+											<Link to={route.path} className="flex items-center space-x-1">
 												<div className="md:w-6 md:h-6 w-5 h-5 text-blue-400">
 													{route.svg ? <route.svg /> : <></>}
 												</div>
 												<p className={active ? " text-black-800 text-lg " : "text-indigo-800 text-lg underline underline-offset-4"}>
 													{route.name}
 												</p>
+											</Link>
+											<div className="flex items-center space-x-1" onClick={(e) => { setProductFn(!product); }} key={route.path}>
+												{product ? (
+													<div className=" ml-6">
+														{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-up" width={14} height={14} viewBox="0 0 24 24" stroke-width={1} stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+																							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																							<polyline points="6 15 12 9 18 15" />
+																						</svg> */}
+														<UpArrow></UpArrow>
+													</div>
+												) : (
+													<div className="ml-4">
+														{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-down" width={14} height={14} viewBox="0 0 24 24" stroke-width={1} stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+																							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+																							<polyline points="6 9 12 15 18 9" />
+																						</svg> */}
+														<DownArrow></DownArrow>
+													</div>
+												)}
 											</div>
-										</li>
-									</Link>
-									<ChildrenMenu tree={route.tree || []} />
-								</a>
+										</div>
+									</li>
+									{/* <ChildrenMenu tree={route.tree || []} /> */}
+								</div>
+								{
+									route.tree.map(() => {
+										return <>
+											{product ? (
+												<div>
+													<ul className="my-3">
+														<li className="text-sm text-indigo-500 py-2 px-6">Best Sellers</li>
+														<li className="text-sm text-gray-800 hover:text-indigo-500 py-2 px-6">Out of Stock</li>
+														<li className="text-sm text-gray-800 hover:text-indigo-500 py-2 px-6">New Products</li>
+													</ul>
+												</div>
+											) : (
+												""
+											)}
+										</>
+									})
+								}
 							</div>
 						)
 					})
