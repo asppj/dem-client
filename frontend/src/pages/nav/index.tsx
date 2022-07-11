@@ -13,7 +13,7 @@ export const Nav = (props: { routes: RouteItem[] }) => {
 	const navItems = props.routes.map((route) => {
 		return <button className="btn">
 			<Link to={route.path}>
-				{avgNode(route.avg)} {route.name}
+				 {route.name}
 			</Link>
 		</button>
 	})
