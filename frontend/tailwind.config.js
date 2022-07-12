@@ -11,7 +11,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+		require('@tailwindcss/forms'),
+	],
 	purge: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'media', // or 'media' or 'class'
   variants: {

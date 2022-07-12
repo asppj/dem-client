@@ -91,8 +91,8 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 							<div key={route.name} >
 								<div className="flex items-center" onClick={() => { console.log("click事件", route.name, route.name, product); selectMenu(index) }}>
 									{/* <li className=" text-white pt-8"> */}
-									<li className={active ? "text-gray-800 text-lg  p-2 hover:bg-blue-50" : " bg-gray-50  ml-2 scale-105 p-2 hover:ring-1 hover:ring-blue-200"}>
-										<div className="flex items-center space-x-2">
+									<li className={active ? "text-gray-800 text-lg  p-2 hover:bg-blue-50" : " bg-gray-50  ml-2  p-2 hover:ring-1 hover:ring-blue-200"}>
+										<div className="flex items-center space-x-1">
 											<Link to={route.path} className="flex items-center space-x-1">
 												<div className="md:w-6 md:h-6 w-5 h-5 text-blue-400">
 													{route.svg ? <route.svg /> : <></>}
@@ -101,9 +101,9 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 													{route.name}
 												</p>
 											</Link>
-											<div className="flex items-center space-x-1" onClick={(e) => { setProductFn(!product); }} key={route.path}>
+											<div className="flex items-center space-x-2" onClick={(e) => { setProductFn(!product); }} key={route.path}>
 												{product ? (
-													<div className=" ml-6">
+													<div className=" ml-4">
 														{/* <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-chevron-up" width={14} height={14} viewBox="0 0 24 24" stroke-width={1} stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 																							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 																							<polyline points="6 15 12 9 18 15" />
@@ -124,6 +124,7 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 									</li>
 									{/* <ChildrenMenu tree={route.tree || []} /> */}
 								</div>
+								<div className="ml-4">
 								{
 									route.tree.map(() => {
 										return <>
@@ -141,6 +142,7 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 										</>
 									})
 								}
+								</div>
 							</div>
 						)
 					})
@@ -378,12 +380,13 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 								</svg>
 								<h3 className="text-base text-gray-800 font-bold tracking-normal leading-tight ml-3 hidden lg:block">The North</h3>
 							</div>
-							<ul className="pr-12 xl:flex items-center h-full hidden">
+							{/* xl:flex hidden 根据页面大小控制显示 */}
+							<ul className="pr-12 md:flex items-center h-full sm:hidden">
 								<li className="cursor-pointer h-full flex items-center text-sm text-indigo-700 tracking-normal border-b-2 border-indigo-700">
 									{/* Dashboard */}
-									<Link to="/404">Dashboard</Link>
+									<Link to="/">AppPost</Link>
 								</li>
-								<li className="cursor-pointer h-full flex items-center text-sm text-gry-800 mx-10 tracking-normal">Products</li>
+								<li className="cursor-pointer h-full flex items-center text-sm text-gry-800 mx-10 tracking-normal"><Link to="/about">Products</Link></li>
 								<li className="cursor-pointer h-full flex items-center text-sm text-gry-800 mr-10 tracking-normal">Performance</li>
 								<li className="cursor-pointer h-full flex items-center text-sm text-gray-800 tracking-normal">Deliverables</li>
 							</ul>
@@ -472,7 +475,7 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 											<rect x={14} y={14} width={6} height={6} rx={1} />
 										</svg>
 										<span className="ml-2">
-											<Link to="/404">Dashboard</Link>
+											<Link to="/">AppPOST</Link>
 											{/* Dashboard */}
 										</span>
 									</div>

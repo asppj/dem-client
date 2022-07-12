@@ -4,14 +4,16 @@ import HomeSVG from '../pages/svgs/home'
 export const Home = lazy(() => import('../pages/home'))
 export const About = lazy(() => import('../pages/about'))
 export const NotFound = lazy(() => import('../pages/404'))
-export const Main = lazy(() => import('../pages/layout'))
+export const AppPOST = lazy(() => import('../pages/AppPost'))
 
 const routes = [
-	// {
-	// 	path: "/",
-	// 	element: Main,
-	// 	name: 'main',
-	// },
+	{
+		path: "/",
+		element: AppPOST,
+		name: 'AppPOST',
+		svg: HomeSVG.HomeSvg,
+		tree: [],
+	},
 	{
 		path: '/',
 		element: About,
