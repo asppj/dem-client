@@ -11,6 +11,8 @@ const methods = [
 	"DELETE",
 ]
 
+const inputClass = "placeholder:text-slate-300 w-full font-normal rounded-md  border-gray-300 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+
 function AppPost() {
 
 	const [method, setMethod] = useState(methods[0])
@@ -25,7 +27,7 @@ function AppPost() {
 					</div>
 					<div className="grow">
 						<div className="col-span-full sm:col-span-3 py-1.5">
-							<input value={host} onChange={(e) => { setHost(e.target.value); }} id="website" type="text" placeholder="https://" className="placeholder:text-slate-300 w-full font-normal rounded-md  border-gray-300 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+							<input value={host} onChange={(e) => { setHost(e.target.value); }} id="website" type="text" placeholder="https://" className={inputClass} />
 						</div>
 					</div>
 				</div>
