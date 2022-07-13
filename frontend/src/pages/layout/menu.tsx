@@ -1,12 +1,12 @@
 
-import AppRouter from '@/routes'
-import React, { useEffect, useState } from 'react'
-import { Link, Route, useLocation, useNavigate } from 'react-router-dom'
+import AppRouter from '@/pages/layout/routes'
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import routes from '../../config/routes'
-import { DownArrow, Menu as MenuSvg, UpArrow } from '../svgs'
+import { Logo, Menu as MenuSvg } from '../svgs'
 import { Layout } from './namespace'
 
-
+// 拼接 className
 function classNames(...classes: any) {
 	return classes.filter(Boolean).join(' ')
 }
@@ -14,11 +14,15 @@ function classNames(...classes: any) {
 const MenuItem = (props: { route: Layout.MenuRoute, active: boolean }) => {
 	const route = props.route;
 	const active = props.active;
-	const activeClass = "cursor-pointer h-full flex items-center text-sm text-indigo-700 mx-3 tracking-normal border-b-2 border-indigo-700";
-	const deactiveClass = "cursor-pointer h-full flex items-center text-sm text-gry-800 mx-3 tracking-normal";
+	const activeClass = "cursor-pointer h-full flex  items-center text-md text-indigo-700 p-6 tracking-normal border-b-2 border-indigo-700 hover:bg-gray-100";
+	const deactiveClass = "cursor-pointer h-full flex items-center  text-md text-gry-800  p-6 tracking-normal hover:bg-blue-100";
 	return (
-		<li className={active ? activeClass : deactiveClass}>
-			<Link to={route.path}>{route.name}</Link>
+		<li>
+			<Link to={route.path}>
+				<div className={classNames(active ? activeClass : deactiveClass, "h-12")} >
+					{route.name}
+				</div>
+			</Link>
 		</li>
 	)
 }
@@ -40,8 +44,6 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 
 	const titleName = "Dem Client"
 	const [show, setShow] = useState(false);
-	const [product, setProduct] = useState(false);
-	const [deliverables, setDeliverables] = useState(false);
 	const [profile, setProfile] = useState(false);
 	const [loginName, setLoginName] = useState("As")
 	const [loginImg, setLoginImg] = useState("https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png")
@@ -57,14 +59,7 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 							<div className="px-6 pt-4">
 								<div className="flex items-center justify-between">
 									<div className="flex items-center">
-										<svg aria-label="Home" id="logo" enableBackground="new 0 0 300 300" height={43} viewBox="0 0 300 300" width={43} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-											<g>
-												<path
-													fill="#4c51bf"
-													d="m234.735 35.532c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16zm0 24c-4.412 0-8-3.588-8-8s3.588-8 8-8 8 3.588 8 8-3.588 8-8 8zm-62.529-14c0-2.502 2.028-4.53 4.53-4.53s4.53 2.028 4.53 4.53c0 2.501-2.028 4.529-4.53 4.529s-4.53-2.027-4.53-4.529zm89.059 60c0 2.501-2.028 4.529-4.53 4.529s-4.53-2.028-4.53-4.529c0-2.502 2.028-4.53 4.53-4.53s4.53 2.029 4.53 4.53zm-40.522-5.459-88-51.064c-1.242-.723-2.773-.723-4.016 0l-88 51.064c-1.232.715-1.992 2.033-1.992 3.459v104c0 1.404.736 2.705 1.938 3.428l88 52.936c.635.381 1.35.572 2.062.572s1.428-.191 2.062-.572l88-52.936c1.201-.723 1.938-2.023 1.938-3.428v-104c0-1.426-.76-2.744-1.992-3.459zm-90.008-42.98 80.085 46.47-52.95 31.289-23.135-13.607v-21.713c0-2.209-1.791-4-4-4s-4 1.791-4 4v21.713l-26.027 15.309c-1.223.719-1.973 2.029-1.973 3.447v29.795l-52 30.727v-94.688zm0 198.707-80.189-48.237 51.467-30.412 24.723 14.539v19.842c0 2.209 1.791 4 4 4s4-1.791 4-4v-19.842l26.027-15.307c1.223-.719 1.973-2.029 1.973-3.447v-31.667l52-30.728v94.729z"
-												/>
-											</g>
-										</svg>
+										<Logo></Logo>
 										<p className="text-bold md:text2xl text-base pl-3 text-gray-800">{titleName}</p>
 									</div>
 									<div id="cross" className=" text-gray-800" onClick={() => setShow(!show)}>
@@ -124,18 +119,11 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 					<div className="container px-6 justify-between h-16 flex items-center lg:items-stretch mx-auto">
 						<div className="h-full flex items-center">
 							<div className="mr-10 flex items-center">
-								<svg aria-label="Home" id="logo" enableBackground="new 0 0 300 300" height={44} viewBox="0 0 300 300" width={43} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-									<g>
-										<path
-											fill="#4c51bf"
-											d="m234.735 35.532c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16zm0 24c-4.412 0-8-3.588-8-8s3.588-8 8-8 8 3.588 8 8-3.588 8-8 8zm-62.529-14c0-2.502 2.028-4.53 4.53-4.53s4.53 2.028 4.53 4.53c0 2.501-2.028 4.529-4.53 4.529s-4.53-2.027-4.53-4.529zm89.059 60c0 2.501-2.028 4.529-4.53 4.529s-4.53-2.028-4.53-4.529c0-2.502 2.028-4.53 4.53-4.53s4.53 2.029 4.53 4.53zm-40.522-5.459-88-51.064c-1.242-.723-2.773-.723-4.016 0l-88 51.064c-1.232.715-1.992 2.033-1.992 3.459v104c0 1.404.736 2.705 1.938 3.428l88 52.936c.635.381 1.35.572 2.062.572s1.428-.191 2.062-.572l88-52.936c1.201-.723 1.938-2.023 1.938-3.428v-104c0-1.426-.76-2.744-1.992-3.459zm-90.008-42.98 80.085 46.47-52.95 31.289-23.135-13.607v-21.713c0-2.209-1.791-4-4-4s-4 1.791-4 4v21.713l-26.027 15.309c-1.223.719-1.973 2.029-1.973 3.447v29.795l-52 30.727v-94.688zm0 198.707-80.189-48.237 51.467-30.412 24.723 14.539v19.842c0 2.209 1.791 4 4 4s4-1.791 4-4v-19.842l26.027-15.307c1.223-.719 1.973-2.029 1.973-3.447v-31.667l52-30.728v94.729z"
-										/>
-									</g>
-								</svg>
+								<Logo></Logo>
 								<h3 className="text-base text-gray-800 font-bold tracking-normal leading-tight ml-3 hidden lg:block">{titleName}</h3>
 							</div>
 							{/* xl:flex hidden 根据页面大小控制显示 */}
-							<ul className="pr-12 md:flex items-center h-full sm:hidden">
+							<ul className="pr-12 md:flex items-center h-10  sm:hidden">
 								{routes.map((route, index) => {
 									return (<>
 										<MenuItem route={route} active={menuCurrent == index}></MenuItem>
@@ -206,7 +194,7 @@ export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 							</div>
 						</div>
 						{/* 设置标志 */}
-						<div className="visible xl:hidden flex items-center relative" onClick={()=>setShow(!show)}>
+						<div className="visible xl:hidden flex items-center relative" onClick={() => setShow(!show)}>
 							<MenuSvg />
 						</div>
 					</div>
