@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SelectInput(props: { values: string[], select: (e: React.ChangeEvent) => void }) {
+function SelectInput(props: { values: string[], select: React.ChangeEventHandler<HTMLSelectElement> }) {
 	return (
 		<div>
 			<select className="form-select appearance-none
@@ -17,7 +17,7 @@ function SelectInput(props: { values: string[], select: (e: React.ChangeEvent) =
       ease-in-out
       m-0
 			h-10
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" onChange={(e) => { props.select(e) }}>
+      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" onChange={props.select}>
 				{
 					props.values.map((value: string) => {
 						return (<option value={value} className="text-clip">{value}</option>)
