@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import HomeSVG from '../pages/svgs/home'
+import HomeSVG from '../pages/svgs'
 
 export const Home = lazy(() => import('../pages/home'))
 export const About = lazy(() => import('../pages/about'))
@@ -10,12 +10,12 @@ const routes = [
 	{
 		path: "/",
 		element: AppPOST,
-		name: 'AppPOST',
-		svg: HomeSVG.HomeSvg,
-		tree: [],
+		name: 'AppPost',
+		svg: HomeSVG.HomeSvg, // 不支持显示
+		tree: [], // 不支持子路由
 	},
 	{
-		path: '/',
+		path: '/home',
 		element: About,
 		name: 'Home',
 		svg: HomeSVG.HomeSvg,
@@ -26,7 +26,7 @@ const routes = [
 		element: About,
 		name: 'About',
 		svg: HomeSVG.DashboardSVG,
-		tree: [{
+		tree: [{ 
 			path: '/',
 			element: About,
 			name: 'Home',
