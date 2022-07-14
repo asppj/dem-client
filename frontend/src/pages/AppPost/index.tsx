@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import CodeHighlighter from './code'
 import HeadersPost from './headers'
 import { AppPostNS } from './interface'
 import SelectInput from './select'
@@ -24,6 +25,7 @@ function AppPost() {
 	// headers
 	const [headers, setHeaders] = useState<AppPostNS.Header[]>([{ key: "", value: "", checked: true }])
 	// body
+	const [body, setBody] = useState("")
 	// 发送请求
 	// requestProcess 
 	const [requestProcess, setRequestProcess] = useState(false);
@@ -46,6 +48,9 @@ function AppPost() {
 				</div>
 				<div>
 					<HeadersPost headers={headers} change={setHeaders} />
+				</div>
+				<div className="container p-1 h-32 rounded-xl  bg-opacity-10 shadow-gray-300 shadow-lg">
+					<CodeHighlighter body={body} change={setBody} />
 				</div>
 				<div className="flex flex-row flex-end justify-end p-x-4 ring-1">
 					<button className={requestProcess ? "btn" : "ring-1"} onClick={(e) => {
