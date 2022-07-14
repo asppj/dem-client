@@ -17,7 +17,7 @@ const MenuItem = (props: { route: Layout.MenuRoute, active: boolean }) => {
 	const activeClass = "cursor-pointer h-full flex  items-center text-md text-indigo-700 p-6 tracking-normal border-b-2 border-indigo-700 hover:bg-gray-100";
 	const deactiveClass = "cursor-pointer h-full flex items-center  text-md text-gry-800  p-6 tracking-normal hover:bg-blue-100";
 	return (
-		<li>
+		<li key={route.path}>
 			<Link to={route.path}>
 				<div className={classNames(active ? activeClass : deactiveClass, "h-12")} >
 					{route.name}
@@ -30,8 +30,8 @@ const MenuItem = (props: { route: Layout.MenuRoute, active: boolean }) => {
 export default function AppMenu(props: { routes?: Layout.MenuRoute[] }) {
 	// 点击菜单
 
-	const [menuCurrent, selectMenu] = useState<number>(-1) // 默认都不选中
-	const navCurrent = useLocation()
+	const [menuCurrent, selectMenu] = useState<number>(-1); // 默认都不选中
+	const navCurrent = useLocation();
 	console.log("current", navCurrent)
 	// useEffect
 	useEffect(() => {

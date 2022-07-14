@@ -20,7 +20,7 @@ function SelectInput(props: { values: string[], select: React.ChangeEventHandler
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" onChange={props.select}>
 				{
 					props.values.map((value: string) => {
-						return (<option value={value} className="text-clip">{value}</option>)
+						return (<option value={value} className="text-clip" key={value}>{value}</option>)
 					})
 				}
 			</select>

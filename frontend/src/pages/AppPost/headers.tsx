@@ -54,8 +54,8 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 		<div className="shadow-sm bg-opacity-50">
 			{
 				props.headers.map((header, index) => {
-					return <>
-						<div className={rowClass} key={index}>
+					return (
+						<div className={rowClass} key={`index-${index}`}>
 							<div className={checkClass}>
 								<input type="checkbox" className="rounded m-auto hover:ring-1 hover:bg-slate-100" defaultChecked={header.checked} onChange={(e) => {
 									console.log("点击checked", e)
@@ -92,8 +92,7 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 
 							</div>
 						</div>
-
-					</>
+					)
 				})
 			}
 		</div>
