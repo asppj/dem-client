@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
+import HeadersPost from './headers'
+import { AppPostNS } from './interface'
 import SelectInput from './select'
+
 
 
 const methods = [
@@ -14,10 +17,20 @@ const methods = [
 const inputClass = "placeholder:text-slate-300 w-full font-normal rounded-md  border-gray-300 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
 
 function AppPost() {
-
+	// methods
 	const [method, setMethod] = useState(methods[0])
+	// hosts
 	const [host, setHost] = useState("")
-	console.log("参数", method, host)
+	// headers
+	const [headers, setHeaders] = useState<AppPostNS.Header[]>([{ key: "", value: "", checked: true }])
+	// body
+	// 发送请求
+	// requestProcess 
+	const [requestProcess, setRequestProcess] = useState(false);
+	const requestClick = () => {
+		console.log("click request", method, host, headers)
+	}
+
 	return (
 		<div className="container w-4/5 h-auto bg-gray-50 shadow-xl p-4 m-0">
 			<div className="flex items-left flex-col gap-2">
@@ -31,9 +44,18 @@ function AppPost() {
 						</div>
 					</div>
 				</div>
-
-				<div className="ring-1">2</div>
-				<div className="ring-1">3</div>
+				<div>
+					<HeadersPost headers={headers} change={setHeaders} />
+				</div>
+				<div className="flex flex-row flex-end justify-end p-x-4 ring-1">
+					<button className={requestProcess ? "btn" : "ring-1"} onClick={(e) => {
+						setRequestProcess(true)
+						requestClick()
+						setRequestProcess(false)
+					}}>
+						Request
+					</button>
+				</div>
 				<div className="ring-1">4</div>
 				<div className="ring-1">5</div>
 				<div className="ring-1">6</div>
@@ -44,7 +66,7 @@ function AppPost() {
 				<div className="ring-1">7</div>
 				<div className="ring-1">7</div>
 			</div>
-		</div>
+		</div >
 	)
 }
 
