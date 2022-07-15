@@ -13,6 +13,6 @@ export namespace AppPostNS {
 	export interface Response {
 		response: string
 		decrypted: boolean // true: 已解密
-		fo: boolean //true: 已格式化
+		fr: boolean //true: 已格式化
 	}
 }

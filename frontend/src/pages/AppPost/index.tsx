@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Refresh } from '../svgs'
-import CodeEditor from './code'
+import CodeEditor, { ResponseView } from './code'
 import HeadersPost from './headers'
 import { AppPostNS } from './interface'
 import SelectInput from './select'
@@ -24,9 +24,11 @@ function AppPost() {
 	// hosts
 	const [host, setHost] = useState("")
 	// headers
-	const [headers, setHeaders] = useState<AppPostNS.Header[]>([{ key: "", value: "", checked: true }])
+	const [headers, setHeaders] = useState<AppPostNS.Header[]>([{ key: "", value: "", checked: true }, { key: "", value: "", checked: true }, { key: "", value: "", checked: true }])
 	// body
 	const [body, setBody] = useState("{}")
+	// response 
+	const [response, setResponse] = useState<AppPostNS.Response>()
 	// 发送请求
 	// requestProcess 
 	const [requestProcess, setRequestProcess] = useState(false);
@@ -46,31 +48,38 @@ function AppPost() {
 							<input value={host} onChange={(e) => { setHost(e.target.value); }} id="website" type="text" placeholder="https://" className={inputClass} />
 						</div>
 					</div>
-				</div>
-				<div>
-					<HeadersPost headers={headers} change={setHeaders} />
-				</div>
-				<div className="container p-1 h-32 w-full rounded-xl  bg-opacity-10 shadow-gray-300 shadow-lg">
-					<CodeEditor body={body} change={setBody} />
-				</div>
-				<div className="flex flex-row flex-end justify-end p-4 ring-0">
-					<button type="button" disabled={requestProcess} className=" flex flex-row space-x-2 p-2 pr-4 py-3 font-semibold border rounded border-blue-400-100 text-gray-800 hover:ring-1 hover:ring-blue-700 hover:ring-opacity-30 hover:bg-white-100 hover:text-black-800 hover:shadow-inherit disabled:bg-blue-200 disable:bg-opacity-30 disabled:text-white-500 disabled:border-slate-200 disabled:shadow-none disabled:ring-0"
-						onClick={(e) => {
-							setRequestProcess(true)
-							requestClick()
-							setTimeout(() => { setRequestProcess(false); }, 500);
-						}}>
-						<div className="flex-grow h-4 w-4 mr-1">
-							{<p className={requestProcess ? "animate-spin scale-50" : "scale-75"}>
-								<Refresh />
-							</p>
-							}
-						</div>
+					<div className="flex flex-row flex-end justify-end p-4 ring-0">
+						<button type="button" disabled={requestProcess} className=" flex flex-row space-x-2 p-2 pr-4 py-3 font-semibold border rounded border-blue-400-100 text-gray-800 hover:ring-2 hover:ring-blue-700 hover:ring-opacity-90 hover:bg-white-100 hover:text-black-800 hover:shadow-inherit disabled:bg-blue-200 disable:bg-opacity-30 disabled:text-white-500 disabled:border-slate-200 disabled:shadow-none disabled:ring-0"
+							onClick={(e) => {
+								setRequestProcess(true)
+								requestClick()
+								setTimeout(() => { setRequestProcess(false); }, 500);
+							}}>
+							<div className="flex-grow h-4 w-4 mr-1">
+								{<p className={requestProcess ? "animate-spin scale-50" : "scale-75"}>
+									<Refresh />
+								</p>
+								}
+							</div>
 
-						<p>
-							Request
-						</p>
-					</button>
+							<p>
+								Request
+							</p>
+						</button>
+					</div>
+				</div>
+				<div className="flex flex-row rounded-lg shadow-lg">
+					<div className="flex-1 h-48 overflow-scroll">
+						<HeadersPost headers={headers} change={setHeaders} />
+					</div>
+					<div className="grow flex-1 p-2 h-48 w-full rounded  bg-opacity-10 ">
+						<CodeEditor body={body} change={setBody} />
+					</div>
+				</div>
+
+
+				<div>
+					<ResponseView body={response?.response || ""} />
 				</div>
 			</div>
 		</div >
