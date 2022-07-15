@@ -37,9 +37,9 @@ function AppPost() {
 	}
 
 	return (
-		<div className="container w-4/5 h-auto bg-gray-50 shadow-xl p-4 m-0">
+		<div className="container w-full h-auto bg-gray-50 shadow-xl p-4 m-0">
 			<div className="flex items-left flex-col gap-2">
-				<div className="col-span-3 flex flex-row items-center hover:ring-1 gap-1">
+				<div className="col-span-3 flex flex-row items-center hover:bg-gray-100 gap-1">
 					<div className="hover:ring-1 rounded-md col-span-3">
 						<SelectInput values={methods} select={(e) => { setMethod(e.target.value); }}></SelectInput>
 					</div>
@@ -48,8 +48,8 @@ function AppPost() {
 							<input value={host} onChange={(e) => { setHost(e.target.value); }} id="website" type="text" placeholder="https://" className={inputClass} />
 						</div>
 					</div>
-					<div className="flex flex-row flex-end justify-end p-4 ring-0">
-						<button type="button" disabled={requestProcess} className=" flex flex-row space-x-2 p-2 pr-4 py-3 font-semibold border rounded border-blue-400-100 text-gray-800 hover:ring-2 hover:ring-blue-700 hover:ring-opacity-90 hover:bg-white-100 hover:text-black-800 hover:shadow-inherit disabled:bg-blue-200 disable:bg-opacity-30 disabled:text-white-500 disabled:border-slate-200 disabled:shadow-none disabled:ring-0"
+					<div className="flex flex-row flex-end justify-end p-4 ring-0 ">
+						<button type="button" disabled={requestProcess} className=" flex flex-row space-x-2 p-2 pr-4 py-2 font-semibold border rounded border-blue-400-100 text-gray-800 hover:ring-2 hover:ring-blue-700 hover:ring-opacity-90 hover:bg-white-100 hover:text-black-800 hover:shadow-inherit disabled:bg-blue-200 disable:bg-opacity-30 disabled:text-white-500 disabled:border-slate-200 disabled:shadow-none disabled:ring-0"
 							onClick={(e) => {
 								setRequestProcess(true)
 								requestClick()
@@ -68,18 +68,16 @@ function AppPost() {
 						</button>
 					</div>
 				</div>
-				<div className="flex flex-row rounded-lg shadow-lg">
-					<div className="flex-1 h-48 overflow-scroll">
+				<div className="flex flex-col xl:flex-row shadow-lg space-x-1 space-y-2 pl-1 ">
+					<div className="xl:flex-1 xl:h-48 max-h-48 overflow-scroll p-3">
 						<HeadersPost headers={headers} change={setHeaders} />
 					</div>
-					<div className="grow flex-1 p-2 h-48 w-full rounded  bg-opacity-10 ">
-						<CodeEditor body={body} change={setBody} />
+					<div className="xl:flex-1 h-48 w-full rounded p-1  bg-opacity-10 ">
+						<CodeEditor body={body} placeholder={"request body"} change={setBody} />
 					</div>
 				</div>
-
-
-				<div>
-					<ResponseView body={response?.response || ""} />
+				<div className="p-3  shadow-xl rounded h-96 w-full">
+					<CodeEditor body={response?.response || ""} placeholder={"response data"} change={() => { }} />
 				</div>
 			</div>
 		</div >

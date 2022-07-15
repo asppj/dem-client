@@ -51,7 +51,7 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 		changeHeader(headers)
 	}
 	return (
-		<div className="shadow-sm bg-opacity-50">
+		<div className="w-full h-full">
 			{
 				props.headers.map((header, index) => {
 					return (
