@@ -4,6 +4,7 @@ import (
 	"embed"
 
 	"github.com/asppj/dem-client/backend"
+	apppost "github.com/asppj/dem-client/backend/AppPost"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 )
@@ -38,6 +39,7 @@ func main() {
 		AssetsHandler: backend.NewAssetHandler(),
 		Bind: []interface{}{
 			app,
+			&apppost.AppPost{},
 		},
 	})
 

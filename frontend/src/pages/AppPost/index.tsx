@@ -1,11 +1,12 @@
 import { useState } from 'react'
+import { MkCurl, AppPost as AppPostRequest } from '../../../wailsjs/go/apppost/AppPost'
 import { Refresh } from '../svgs'
-import CodeEditor, { ResponseView } from './code'
+import CodeEditor, { JsonView, ResponseView } from './code'
 import HeadersPost from './headers'
 import { AppPostNS } from './interface'
 import SelectInput from './select'
-
-
+import { apppost } from '../../../wailsjs/go/models'
+import ModalButton from './modal'
 
 const methods = [
 	"GET",
@@ -29,11 +30,35 @@ function AppPost() {
 	const [body, setBody] = useState("{}")
 	// response 
 	const [response, setResponse] = useState<AppPostNS.Response>()
+	// 显示curl
+
+	const [curl, setCurl] = useState("")
+	// 点击get curl
+	const getCURL = () => {
+		console.log("getCURL")
+		let paramHeaders = new Array<apppost.AppHeader>();
+		headers.map((header) => header.checked && paramHeaders.push(new apppost.AppHeader({ key: header.key, value: header.value })))
+		MkCurl(new apppost.AppPostParam({ method: method, url: host, body: body, headers: paramHeaders }), "").then((res) => {
+			console.log("mkcurl response:", res)
+			setCurl(res.toString())
+		}).catch((e) => {
+			console.log("mkcurl error:", e)
+		})
+	}
 	// 发送请求
 	// requestProcess 
 	const [requestProcess, setRequestProcess] = useState(false);
 	const requestClick = () => {
 		console.log("click request", method, host, headers, body)
+		let paramHeaders = new Array<apppost.AppHeader>();
+		headers.map((header) => header.checked && paramHeaders.push(new apppost.AppHeader({ key: header.key, value: header.value })))
+		AppPostRequest(new apppost.AppPostParam({ method: method, url: host, body: body, headers: paramHeaders }), "").then((res) => {
+			console.log("res:", res)
+			// console.log("res:", res.response, res.status_code)
+			// setResponse({ response: res.response })
+		}).catch((e) => {
+			console.log("error:", e)
+		})
 	}
 
 	return (
@@ -61,11 +86,13 @@ function AppPost() {
 								</p>
 								}
 							</div>
-
 							<p>
 								Request
 							</p>
 						</button>
+					</div>
+					<div className="">
+						<ModalButton onClick={() => getCURL()} text="curl" title="curl" context={curl}></ModalButton>
 					</div>
 				</div>
 				<div className="flex flex-col xl:flex-row shadow-lg space-x-1 space-y-2 pl-1 ">
@@ -77,7 +104,9 @@ function AppPost() {
 					</div>
 				</div>
 				<div className="p-3  shadow-xl rounded h-96 w-full">
-					<CodeEditor body={response?.response || ""} placeholder={"response data"} change={() => { }} />
+					{/* <CodeEditor body={response?.response || ""} placeholder={"response data"} change={() => { }} /> */}
+					{/* <ResponseView body={response?.response || ""} placeholder={"response data"} /> */}
+					<JsonView body={response?.response || ""} placeholder={"response data"} />
 				</div>
 			</div>
 		</div >
