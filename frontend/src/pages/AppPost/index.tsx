@@ -29,6 +29,7 @@ function AppPost() {
 	// body
 	const [body, setBody] = useState("{}")
 	// response 
+	// const [response, setResponse] = useState<AppPostNS.Response>({ response: "", is_json: false, headers: [] })
 	const [response, setResponse] = useState<AppPostNS.Response>()
 	// 显示curl
 
@@ -54,8 +55,10 @@ function AppPost() {
 		headers.map((header) => header.checked && paramHeaders.push(new apppost.AppHeader({ key: header.key, value: header.value })))
 		AppPostRequest(new apppost.AppPostParam({ method: method, url: host, body: body, headers: paramHeaders }), "").then((res) => {
 			console.log("res:", res)
-			// console.log("res:", res.response, res.status_code)
-			// setResponse({ response: res.response })
+			if ('response' in res) {
+				console.log("res:", res.response, res.status_code)
+				setResponse({ response: res.response, is_json: res.is_json, headers: res.headers.map((item) => { return `${item.key}:${item.values.join(',')}` }) })
+			}
 		}).catch((e) => {
 			console.log("error:", e)
 		})
@@ -106,7 +109,7 @@ function AppPost() {
 				<div className="p-3  shadow-xl rounded h-96 w-full">
 					{/* <CodeEditor body={response?.response || ""} placeholder={"response data"} change={() => { }} /> */}
 					{/* <ResponseView body={response?.response || ""} placeholder={"response data"} /> */}
-					<JsonView body={response?.response || ""} placeholder={"response data"} />
+					<JsonView body={response} placeholder={"response data"} />
 				</div>
 			</div>
 		</div >

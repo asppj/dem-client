@@ -17,6 +17,10 @@ type AppHeader struct {
 	Value string `json:"value"`
 }
 
+type ResponseHeader struct {
+	Key    string   `json:"key"`
+	Values []string `json:"values"`
+}
 type AppPostParam struct {
 	Method  string      `json:"method"`
 	URL     string      `json:"url"`
@@ -24,15 +28,15 @@ type AppPostParam struct {
 	Body    string      `json:"body"`
 }
 
-func (a AppPostParam) request(secret string) (code int, response string, err error) {
+func (a AppPostParam) request(secret string) (code int, headers []ResponseHeader, response string, err error) {
 	body, err := encrypt(a.Body, secret)
 	if err != nil {
-		return 0, "", fmt.Errorf("Failed to encrypt:%v", err)
+		return 0, nil, "", fmt.Errorf("Failed to encrypt:%v", err)
 	}
 
 	req, err := http.NewRequest(a.Method, a.URL, strings.NewReader(body))
 	if err != nil {
-		return 0, "", fmt.Errorf("Failed to new request: %v", err)
+		return 0, nil, "", fmt.Errorf("Failed to new request: %v", err)
 	}
 	for _, header := range a.Headers {
 		if header.Key != "" && header.Value != "" {
@@ -41,23 +45,33 @@ func (a AppPostParam) request(secret string) (code int, response string, err err
 	}
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return 0, "", fmt.Errorf("Failed to request.Do:%v", err)
+		return 0, nil, "", fmt.Errorf("Failed to request.Do:%v", err)
 	}
 	defer res.Body.Close()
 	data, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return 0, "", fmt.Errorf("Failed to io.read")
+		return 0, nil, "", fmt.Errorf("Failed to io.read")
 	}
-	return res.StatusCode, string(data), nil
+	headers = make([]ResponseHeader, 0)
+
+	for k, vs := range res.Header {
+		headers = append(headers, ResponseHeader{
+			Key:    k,
+			Values: vs,
+		})
+	}
+	return res.StatusCode, headers, string(data), nil
 }
 
 type AppPostResponse struct {
-	StatusCode int    `json:"status_code"`
-	Response   string `json:"response"`
+	StatusCode int              `json:"status_code"`
+	Headers    []ResponseHeader `json:"headers"`
+	IsJson     bool             `json:"is_json"` // true 返回json格式
+	Response   string           `json:"response"`
 }
 
 func (a *AppPost) AppPost(param AppPostParam, secret string) (AppPostResponse, error) {
-	code, response, err := param.request(secret)
+	code, headers, response, err := param.request(secret)
 	if err != nil {
 		return AppPostResponse{}, fmt.Errorf("request err:%v", err)
 	}
@@ -69,7 +83,22 @@ func (a *AppPost) AppPost(param AppPostParam, secret string) (AppPostResponse, e
 	return AppPostResponse{
 		StatusCode: code,
 		Response:   res,
+		Headers:    headers,
+		IsJson:     jsonContentType(headers),
 	}, nil
+}
+
+func jsonContentType(headers []ResponseHeader) bool {
+	for _, header := range headers {
+		if strings.ToLower(header.Key) == "content-type" {
+			for _, element := range header.Values {
+				if strings.HasPrefix(strings.ToLower(element), "application/json") {
+					return true
+				}
+			}
+		}
+	}
+	return false
 }
 
 // 拼接curl

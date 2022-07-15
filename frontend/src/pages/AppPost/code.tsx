@@ -8,13 +8,14 @@ import ReactJson from 'react-json-view'
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-xcode";
 import "ace-builds/src-noconflict/ext-language_tools";
+import { AppPostNS } from "./interface";
 
 
-export const JsonView = (props: { body: string, placeholder?: string }) => {
+export const JsonView = (props: { body: AppPostNS.Response | undefined, placeholder?: string }) => {
 	return (
 		<div className="p-2 select-all overflow-scroll shadow-xl h-full w-full">
 			<ReactJson
-				src={JSON.parse(props.body)}
+				src={props.body ? (props.body.is_json ? JSON.parse(props.body.response) : props) : {}}
 			/>
 		</div>
 	)
