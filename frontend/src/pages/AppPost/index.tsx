@@ -81,7 +81,7 @@ function AppPost() {
 	}
 
 	return (
-		<div className="container w-full h-auto bg-gray-50 shadow-xl p-4 m-0">
+		<div className="container-xl w-full h-auto bg-gray-50 shadow-xl p-4 m-0">
 			<div className="flex items-left flex-col gap-2">
 				<div className="col-span-3 flex flex-row items-center hover:bg-gray-100 gap-1">
 					<div className="hover:ring-1 rounded-md col-span-3">

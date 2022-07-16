@@ -8,7 +8,7 @@ const AppRouter = () => {
 	})
 
 	return (
-		< div className="container border-2 p-1 min-h-screen" >
+		< div className="" >
 			<Suspense fallback={< div className="bg-slate-300 " > Loading...</ div>}>
 				<Routes >
 					{myRoutes}
