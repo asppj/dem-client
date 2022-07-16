@@ -93,15 +93,15 @@ function AppPost() {
 							{/* <Input value={host} onChange={(e) => { setHost(e.target.value); }} id="website" type="text" placeholder="https://" className={inputClass} /> */}
 						</div>
 					</div>
-					<div className="flex flex-row flex-end justify-end p-4 ring-0 ">
-						<button type="button" disabled={requestProcess} className=" flex flex-row space-x-2 p-2 pr-4 py-2 font-semibold border rounded border-blue-400-100 text-gray-800 hover:ring-2 hover:ring-blue-700 hover:ring-opacity-90 hover:bg-white-100 hover:text-black-800 hover:shadow-inherit disabled:bg-blue-200 disable:bg-opacity-30 disabled:text-white-500 disabled:border-slate-200 disabled:shadow-none disabled:ring-0"
+					<div className="flex flex-row flex-end justify-end p-4 ring-0">
+						<button type="button" disabled={requestProcess} className=" flex flex-row h-10 p-2 font-semibold border-2 rounded border-blue-400-100 text-gray-800 hover:ring-2 hover:ring-blue-700 hover:ring-opacity-90 hover:bg-white-100 hover:text-black-800 hover:shadow-inherit disabled:bg-blue-200 disable:bg-opacity-30 disabled:text-white-500 disabled:border-slate-200 disabled:shadow-none disabled:ring-0"
 							onClick={(e) => {
 								setRequestProcess(true)
 								requestClick()
 								setTimeout(() => { setRequestProcess(false); }, 500);
 							}}>
-							<div className="flex-grow h-4 w-8  align-center">
-								{<p className={requestProcess ? "animate-spin scale-50" : "scale-75"}>
+							<div className="flex-grow h-10">
+								{<p className={requestProcess ? "animate-spin scale-50 items-center" : "scale-75 items-center"}>
 									<Refresh />
 								</p>
 								}
