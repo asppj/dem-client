@@ -8,6 +8,7 @@ import SelectInput from './select'
 import { apppost } from '../../../wailsjs/go/models'
 import ModalButton from './modal'
 import { Input, notification } from 'antd';
+import { openNotificationWithIcon } from '@/utils/notice'
 
 const methods = [
 	"GET",
@@ -17,14 +18,14 @@ const methods = [
 	"HEAD",
 	"DELETE",
 ]
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
+// type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-const openNotificationWithIcon = (type: NotificationType, title: string, message: string) => {
-	notification[type]({
-		message: title,
-		description: message,
-	});
-};
+// const openNotificationWithIcon = (type: NotificationType, title: string, message: string) => {
+// 	notification[type]({
+// 		message: title,
+// 		description: message,
+// 	});
+// };
 
 
 const inputClass = "placeholder:text-slate-300 w-full font-normal rounded-md  border-gray-300 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -47,7 +48,6 @@ function AppPost() {
 	const [curl, setCurl] = useState("")
 	// 点击get curl
 	const getCURL = () => {
-		console.log("getCURL")
 		let paramHeaders = new Array<apppost.AppHeader>();
 		headers.map((header) => header.checked && paramHeaders.push(new apppost.AppHeader({ key: header.key, value: header.value })))
 		MkCurl(new apppost.AppPostParam({ method: method, url: host, body: body, headers: paramHeaders }), secret).then((res) => {
@@ -55,6 +55,7 @@ function AppPost() {
 			setCurl(res.toString())
 		}).catch((e) => {
 			console.log("mkcurl error:", e)
+			openNotificationWithIcon("error", "mkcurl", e)
 		})
 	}
 	// 发送请求
@@ -87,7 +88,7 @@ function AppPost() {
 						<SelectInput values={methods} select={(e) => { setMethod(e.target.value); }}></SelectInput>
 					</div>
 					<div className="grow">
-						<div className="col-span-full sm:col-span-3 py-1.5">
+						<div className="col-span-full sm:col-span-2 py-1.5">
 							<input value={host} onChange={(e) => { setHost(e.target.value); }} id="website" type="text" placeholder="https://" className={inputClass} />
 							{/* <Input value={host} onChange={(e) => { setHost(e.target.value); }} id="website" type="text" placeholder="https://" className={inputClass} /> */}
 						</div>
@@ -99,22 +100,22 @@ function AppPost() {
 								requestClick()
 								setTimeout(() => { setRequestProcess(false); }, 500);
 							}}>
-							<div className="flex-grow h-4 w-4 mr-1">
+							<div className="flex-grow h-4 w-8  align-center">
 								{<p className={requestProcess ? "animate-spin scale-50" : "scale-75"}>
 									<Refresh />
 								</p>
 								}
 							</div>
-							<p>
-								Request
-							</p>
+							{/* <p className="p-auto justify-center text-center center p-1 align-middle"> */}
+							Request
+							{/* </p> */}
 						</button>
 					</div>
 					<div className="flex flex-row flex-end justify-end p-2 ring-0 ">
 						<ModalButton onClick={() => getCURL()} text="curl" title="curl" context={curl}></ModalButton>
 					</div>
 					<div >
-						<input placeholder="secret" type="text" defaultValue={secret} onChange={(e) => { setSecret(e.target.value) }}></input>
+						<input className={inputClass} placeholder="secret" type="text" defaultValue={secret} onChange={(e) => { setSecret(e.target.value) }}></input>
 					</div>
 				</div>
 				<div className="flex flex-col xl:flex-row shadow-lg space-x-1 space-y-2 pl-1 ">

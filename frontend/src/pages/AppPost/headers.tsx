@@ -4,14 +4,14 @@ import { AppPostNS } from './interface'
 
 
 function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: AppPostNS.Header[]) => void }) {
-	const rowClass = "flex flex-row gap-0 justify-start p-1 m-0 align-left"
+	const rowClass = "flex flex-row gap-0 justify-start p-1 m-0 align-lef"
 	const inputClass = "h-8 m-1 flex-1 placeholder:text-slate-300 font-sm rounded-md  border-gray-300 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
 	// const inputClass = ""
 	const checkClass = "flex flex-center align-baseline"
 	const clickClass = "flex flex-row hover:bg-blue-50  shadow-sm px-1 py-1.5 mt-1"
 	const placeholderKey = "Context-Type"
 	const placeholderValue = "application/json"
-	const placeholderClass = "placeholder:placeholder-gray-300 placeholder:bg-white-200 placeholder:focus:placeholder-gray-100 border-gray-300 border border-rounded rounded-md"
+	const placeholderClass = "w-full placeholder:placeholder-gray-300 placeholder:bg-white-200 placeholder:focus:placeholder-gray-100 border-gray-300 border border-rounded rounded-md"
 
 	// 联动调用父子组件change
 	const changeHeader = (value: AppPostNS.Header[]) => {
@@ -57,8 +57,7 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 					return (
 						<div className={rowClass} key={`index-${index}`}>
 							<div className={checkClass}>
-								<input type="checkbox" className="rounded m-auto hover:ring-1 hover:bg-slate-100" defaultChecked={header.checked} onChange={(e) => {
-									console.log("点击checked", e)
+								<input type="checkbox" className=" rounded m-auto hover:ring-1 hover:bg-slate-100" defaultChecked={header.checked} onChange={(e) => {
 									clickHeader(index, e.target.checked)
 								}}></input>
 							</div>
@@ -68,17 +67,7 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 							<div className={inputClass}>
 								<input type="text" className={placeholderClass} placeholder={placeholderValue} defaultValue={header.value} onChange={(e) => { changeValue(index, e.target.value) }}></input>
 							</div>
-							<div className="flex-1 flex flex-row flex-shrink">
-								{/* 最后一行才有plus */}
-								{
-									index === props.headers.length - 1 && (
-										<div onClick={clickPlus}  >
-											<div className={clickClass}>
-												<Plus ></Plus>
-											</div>
-										</div>
-									)
-								}
+							<div className="flex-none flex flex-row w-10 mr-3">
 								{/* 只有一行没有minus */}
 								{
 									props.headers.length != 1 && (
@@ -89,6 +78,16 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 										</div>
 									)
 
+								}
+									{/* 最后一行才有plus */}
+									{
+									index === props.headers.length - 1 && (
+										<div onClick={clickPlus}  >
+											<div className={clickClass}>
+												<Plus ></Plus>
+											</div>
+										</div>
+									)
 								}
 							</div>
 						</div>

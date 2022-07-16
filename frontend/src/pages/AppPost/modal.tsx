@@ -5,7 +5,7 @@ export default function ModalButton(props: { onClick: () => void, title: string,
 	return (
 		<>
 			<button
-				className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+				className="bg-pink-500 text-white active:ring-pink-600 hover:ring-2 hover:bg-opacity-10 hover:ring-pink-500 hover:text-black font-bold uppercase text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-200"
 				type="button"
 				onClick={() => { props.onClick(); setShowModal(true) }}
 			>
