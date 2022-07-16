@@ -118,19 +118,3 @@ func (a *AppPost) MkCurl(param AppPostParam, secret string) (curl string, err er
 	}
 	return
 }
-
-func encrypt(body string, secret string) (string, error) {
-	if secret == "" {
-		return body, nil
-	}
-	// TODO: 加密
-	return "", nil
-}
-
-func decrypt(response string, secret string) (string, error) {
-	if secret == "" {
-		return response, nil
-	}
-	// TODO: 解密
-	return "", nil
-}

@@ -4,8 +4,8 @@ import { AppPostNS } from './interface'
 
 
 function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: AppPostNS.Header[]) => void }) {
-	const rowClass = "flex flex-flex gap-2 justify-start p-1 m-0 align-center"
-	const inputClass = "h-8 m-1 flex-shrink placeholder:text-slate-300 font-normal rounded-md  border-gray-300 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+	const rowClass = "flex flex-row gap-0 justify-start p-1 m-0 align-left"
+	const inputClass = "h-8 m-1 flex-1 placeholder:text-slate-300 font-sm rounded-md  border-gray-300 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
 	// const inputClass = ""
 	const checkClass = "flex flex-center align-baseline"
 	const clickClass = "flex flex-row hover:bg-blue-50  shadow-sm px-1 py-1.5 mt-1"
@@ -68,11 +68,11 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 							<div className={inputClass}>
 								<input type="text" className={placeholderClass} placeholder={placeholderValue} defaultValue={header.value} onChange={(e) => { changeValue(index, e.target.value) }}></input>
 							</div>
-							<div className="flex flex-row flex-grow">
+							<div className="flex-1 flex flex-row flex-shrink">
 								{/* 最后一行才有plus */}
 								{
 									index === props.headers.length - 1 && (
-										<div onClick={clickPlus}>
+										<div onClick={clickPlus}  >
 											<div className={clickClass}>
 												<Plus ></Plus>
 											</div>
@@ -88,8 +88,8 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 											</div>
 										</div>
 									)
-								}
 
+								}
 							</div>
 						</div>
 					)
