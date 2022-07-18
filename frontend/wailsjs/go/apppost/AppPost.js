@@ -9,3 +9,7 @@ export function AppPost(arg1, arg2) {
 export function MkCurl(arg1, arg2) {
   return window['go']['apppost']['AppPost']['MkCurl'](arg1, arg2);
 }
+
+export function ParseCurl(arg1, arg2) {
+  return window['go']['apppost']['AppPost']['ParseCurl'](arg1, arg2);
+}

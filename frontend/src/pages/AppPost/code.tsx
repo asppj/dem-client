@@ -4,6 +4,8 @@ import AceEditor from "react-ace";
 import showdown from 'showdown'
 import showdownHighlight from 'showdown-highlight'
 import ReactJson from 'react-json-view'
+import beautify from 'beautify'
+
 
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-xcode";
@@ -13,7 +15,7 @@ import { AppPostNS } from "./interface";
 
 export const JsonView = (props: { body: AppPostNS.Response | undefined, placeholder?: string }) => {
 	return (
-		<div className="p-2 select-all overflow-scroll shadow-xl h-full w-full">
+		<div className="p-2  overflow-scroll shadow-xl h-full w-full">
 			<ReactJson
 				src={props.body ? (props.body.is_json ? JSON.parse(props.body.response) : props) : {}}
 			/>
@@ -41,6 +43,7 @@ export const ResponseView = (props: { body: string, placeholder?: string }) => {
 
 
 function CodeEditor(props: { body: string, placeholder?: string, change: (value: string) => void }) {
+	const body = beautify(props.body, { format: 'json' });
 	return (
 		<AceEditor
 			style={{ width: "100%", height: "100%", overflow: "scroll" }}
@@ -51,6 +54,7 @@ function CodeEditor(props: { body: string, placeholder?: string, change: (value:
 			editorProps={{ $blockScrolling: true }}
 			placeholder={props?.placeholder || "{}"}
 			fontSize={12}
+			value={body}
 			showPrintMargin={true}
 			showGutter={true}
 			highlightActiveLine={true}
@@ -60,7 +64,7 @@ function CodeEditor(props: { body: string, placeholder?: string, change: (value:
 				enableSnippets: true,
 				showLineNumbers: true,
 				tabSize: 2,
-				autoScrollEditorIntoView: true
+				autoScrollEditorIntoView: true,
 			}}
 		/>
 	)

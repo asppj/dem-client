@@ -5,3 +5,5 @@ import {apppost} from '../models';
 export function AppPost(arg1:apppost.AppPostParam,arg2:string):Promise<apppost.AppPostResponse|Error>;
 
 export function MkCurl(arg1:apppost.AppPostParam,arg2:string):Promise<string|Error>;
+
+export function ParseCurl(arg1:string,arg2:string):Promise<apppost.AppPostParam|Error>;

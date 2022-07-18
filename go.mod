@@ -3,6 +3,7 @@ module github.com/asppj/dem-client
 go 1.17
 
 require (
+	github.com/antlabs/pcurl v0.0.7
 	github.com/gin-gonic/gin v1.8.1
 	github.com/wailsapp/wails/v2 v2.0.0-beta.38
 )
@@ -16,6 +17,8 @@ require (
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
 	github.com/goccy/go-json v0.9.7 // indirect
 	github.com/google/uuid v1.1.2 // indirect
+	github.com/guonaihong/clop v0.0.9 // indirect
+	github.com/guonaihong/gout v0.0.12 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/jchv/go-winloader v0.0.0-20210711035445-715c2860da7e // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -27,7 +30,7 @@ require (
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mattn/go-colorable v0.1.11 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.1 // indirect
 	github.com/pkg/browser v0.0.0-20210706143420-7d21f8c997e2 // indirect

@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"github.com/antlabs/pcurl"
 )
 
 type AppPost struct {
@@ -115,6 +117,33 @@ func (a *AppPost) MkCurl(param AppPostParam, secret string) (curl string, err er
 			return curl, err
 		}
 		curl += fmt.Sprintf(" --data '%s'", data)
+	}
+	return
+}
+func (a *AppPost) ParseCurl(text, secret string) (param AppPostParam, err error) {
+	req, err := pcurl.ParseAndRequest(text)
+	if err != nil {
+		fmt.Printf("err:%s\n", err)
+		return
+	}
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		return
+	}
+	headers := make([]AppHeader, 0)
+	for key, values := range req.Header {
+		for _, value := range values {
+			headers = append(headers, AppHeader{
+				Key:   key,
+				Value: value,
+			})
+		}
+	}
+	param = AppPostParam{
+		Method:  req.Method,
+		URL:     req.URL.String(),
+		Headers: headers,
+		Body:    string(body),
 	}
 	return
 }

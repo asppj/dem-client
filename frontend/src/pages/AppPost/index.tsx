@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { MkCurl, AppPost as AppPostRequest } from '../../../wailsjs/go/apppost/AppPost'
+import React, { useState } from 'react'
+import { MkCurl, AppPost as AppPostRequest, ParseCurl } from '../../../wailsjs/go/apppost/AppPost'
 import { Refresh } from '../svgs'
 import CodeEditor, { JsonView, ResponseView } from './code'
 import HeadersPost from './headers'
@@ -79,17 +79,44 @@ function AppPost() {
 			openNotificationWithIcon("error", "request异常", e)
 		})
 	}
+	// 粘贴curl语句
+	const parseCurl = (text: string) => {
+		console.log("粘贴:",text);
+		if (text.length < 4) {
+			return
+		}
+		if (!text.startsWith("curl")) {
+			return
+		}
+		ParseCurl(text, secret).then((res) => {
+			console.log("ParseCurl.res1:", res)
+			if ('url' in res) {
+				console.log("ParseCurl.res2:", res.url, res.method)
+				setHost(res.url)
+				setBody(res.body)
+				setMethod(res.method)
+				setHeaders(res.headers.map((item) => { return { key: item.key, value: item.value, checked: true } }))
+				openNotificationWithIcon("success", "parse curl", text)
+			} else {
+				openNotificationWithIcon("error", "request失败", res.message)
+			}
+		}).catch((e) => {
+			console.log("error:", e)
+			openNotificationWithIcon("error", "request异常", e)
+		})
+	}
+
 
 	return (
 		<div className="container-xl w-full h-auto bg-gray-50 shadow-xl p-4 m-0">
 			<div className="flex items-left flex-col gap-2">
 				<div className="col-span-3 flex flex-row items-center hover:bg-gray-100 gap-1">
 					<div className="hover:ring-1 rounded-md col-span-3">
-						<SelectInput values={methods} select={(e) => { setMethod(e.target.value); }}></SelectInput>
+						<SelectInput values={methods} selected={method} select={(e) => { setMethod(e.target.value); }}></SelectInput>
 					</div>
 					<div className="grow">
 						<div className="col-span-full sm:col-span-2 py-1.5">
-							<input value={host} onChange={(e) => { setHost(e.target.value); }} id="website" type="text" placeholder="https://" className={inputClass} />
+							<input value={host} onChange={(e) => { setHost(e.target.value); parseCurl(e.target.value) }} id="website" type="text" placeholder="https://" className={inputClass} />
 							{/* <Input value={host} onChange={(e) => { setHost(e.target.value); }} id="website" type="text" placeholder="https://" className={inputClass} /> */}
 						</div>
 					</div>
@@ -127,9 +154,9 @@ function AppPost() {
 					</div>
 				</div>
 				<div className="p-1  rounded h-96 w-full">
-					{/* <CodeEditor body={response?.response || ""} placeholder={"response data"} change={() => { }} /> */}
+					<CodeEditor body={response?.response || ""} placeholder={"response data"} change={() => { }} />
 					{/* <ResponseView body={response?.response || ""} placeholder={"response data"} /> */}
-					<JsonView body={response} placeholder={"response data"} />
+					{/* <JsonView body={response} placeholder={"response data"} /> */}
 				</div>
 			</div>
 		</div >
