@@ -54,14 +54,15 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 		<div className="w-full h-full">
 			{
 				props.headers.map((header, index) => {
+					console.log(`header-${index}:`, header)
 					return (
-						<div className={rowClass} key={`index-${index}`}>
+						<div className={rowClass} key={`index-${header.key}-${index}`}>
 							<div className={checkClass}>
 								<input type="checkbox" className=" rounded m-auto hover:ring-1 hover:bg-slate-100" defaultChecked={header.checked} onChange={(e) => {
 									clickHeader(index, e.target.checked)
 								}}></input>
 							</div>
-							<div className={inputClass}>
+							<div className={inputClass} >
 								<input type="text" className={placeholderClass} placeholder={placeholderKey} defaultValue={header.key} onChange={(e) => { changeKey(index, e.target.value) }}></input>
 							</div>
 							<div className={inputClass}>
@@ -79,8 +80,8 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 									)
 
 								}
-									{/* 最后一行才有plus */}
-									{
+								{/* 最后一行才有plus */}
+								{
 									index === props.headers.length - 1 && (
 										<div onClick={clickPlus}  >
 											<div className={clickClass}>
