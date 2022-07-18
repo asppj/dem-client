@@ -6,7 +6,9 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    process.env.MODE !== 'production' ? react({
+      jsxRuntime: 'classic',
+    }) : react(),
     vitePluginImp({
       optimize: true,
       libList: [
