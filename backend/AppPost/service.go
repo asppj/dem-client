@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strings"
 
@@ -73,6 +74,9 @@ type AppPostResponse struct {
 }
 
 func (a *AppPost) AppPost(param AppPostParam, secret string) (AppPostResponse, error) {
+	if err := recoverMiddleware(); err != nil {
+		return AppPostResponse{}, err
+	}
 	code, headers, response, err := param.request(secret)
 	if err != nil {
 		return AppPostResponse{}, fmt.Errorf("request err:%v", err)
@@ -81,6 +85,7 @@ func (a *AppPost) AppPost(param AppPostParam, secret string) (AppPostResponse, e
 	if err != nil {
 		return AppPostResponse{}, fmt.Errorf("decrypt err:%v", err)
 	}
+	log.Default().Println()
 	// if secret !="" 加密body,解密response
 	return AppPostResponse{
 		StatusCode: code,
@@ -105,6 +110,9 @@ func jsonContentType(headers []ResponseHeader) bool {
 
 // 拼接curl
 func (a *AppPost) MkCurl(param AppPostParam, secret string) (curl string, err error) {
+	if err := recoverMiddleware(); err != nil {
+		return "", err
+	}
 	curl = fmt.Sprintf("curl --request '%s' '%s'", param.Method, param.URL)
 	for _, header := range param.Headers {
 		if header.Key != "" && header.Value != "" {
@@ -121,6 +129,9 @@ func (a *AppPost) MkCurl(param AppPostParam, secret string) (curl string, err er
 	return
 }
 func (a *AppPost) ParseCurl(text, secret string) (param AppPostParam, err error) {
+	if err := recoverMiddleware(); err != nil {
+		return param, err
+	}
 	req, err := pcurl.ParseAndRequest(text)
 	if err != nil {
 		fmt.Printf("err:%s\n", err)
@@ -146,4 +157,11 @@ func (a *AppPost) ParseCurl(text, secret string) (param AppPostParam, err error)
 		Body:    string(body),
 	}
 	return
+}
+
+func recoverMiddleware() error {
+	if err := recover(); err != nil {
+		return fmt.Errorf("recover middleware: %v", err)
+	}
+	return nil
 }

@@ -35,6 +35,9 @@ func decrypt(input, secretsKey string) (out string, err error) {
 	if err != nil {
 		return "", err
 	}
+	if res == nil {
+		return "", fmt.Errorf("decryption failed: secret:%s ,input:%s", secretsKey, input)
+	}
 	return string(res.RByte), nil
 }
 func encrypt(input, secretsKey string) (out string, err error) {
@@ -49,6 +52,9 @@ func encrypt(input, secretsKey string) (out string, err error) {
 	res, err := cbcCipher.Encrypt(string(input))
 	if err != nil {
 		return "", err
+	}
+	if res == nil {
+		return "", fmt.Errorf("加密失败 secret:%s ,input:%s", secretsKey, input)
 	}
 	// json_str := bytes.NewBuffer(input).String()
 	o := base64.StdEncoding.EncodeToString(res.RByte)

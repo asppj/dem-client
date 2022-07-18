@@ -54,7 +54,6 @@ function HeadersPost(props: { headers: AppPostNS.Header[], change: (headers: App
 		<div className="w-full h-full">
 			{
 				props.headers.map((header, index) => {
-					console.log(`header-${index}:`, header)
 					return (
 						<div className={rowClass} key={`index-${header.key}-${index}`}>
 							<div className={checkClass}>
