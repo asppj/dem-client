@@ -1,8 +1,8 @@
 package cmdrunner
 
 type ShellRunner interface {
-	RunShell(shell string) ([]byte, error)
-	ReadFile(path string) ([]byte, error)
+	RunShell(shell string) (string, error)
+	ReadFile(path string) (string, error)
 	ExistFile(path string) (bool, error)
 	Close() error
 }

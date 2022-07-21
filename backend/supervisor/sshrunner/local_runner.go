@@ -16,13 +16,15 @@ func (s *LocalRunner) Close() error {
 	return nil
 }
 
-func (s *LocalRunner) RunShell(shell string) ([]byte, error) {
+func (s *LocalRunner) RunShell(shell string) (string, error) {
 	cmd := exec.Command("bash", shell)
 	cmd.Stderr, cmd.Stdin = os.Stderr, os.Stdin
-	return cmd.Output()
+	out, err := cmd.Output()
+	return string(out), err
 }
-func (s *LocalRunner) ReadFile(path string) ([]byte, error) {
-	return ReadFile(path)
+func (s *LocalRunner) ReadFile(path string) (string, error) {
+	out, err := ReadFile(path)
+	return string(out), err
 }
 func (s *LocalRunner) ExistFile(path string) (bool, error) {
 	_, err := os.Stat(path)

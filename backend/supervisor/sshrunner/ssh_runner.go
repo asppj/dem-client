@@ -42,12 +42,14 @@ func (s *SSHRunner) Close() error {
 	return s.remote.Close()
 }
 
-func (s *SSHRunner) RunShell(shell string) ([]byte, error) {
-	return s.remote.RemoteRun(shell)
+func (s *SSHRunner) RunShell(shell string) (string, error) {
+	out, err := s.remote.RemoteRun(shell)
+	return string(out), err
 }
-func (s *SSHRunner) ReadFile(path string) ([]byte, error) {
-	panic(nil)
+func (s *SSHRunner) ReadFile(path string) (string, error) {
+	out, err := s.remote.ReadFile(path)
+	return string(out), err
 }
 func (s *SSHRunner) ExistFile(path string) (bool, error) {
-	panic(nil)
+	return s.remote.ExistFile(path)
 }

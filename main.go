@@ -5,6 +5,7 @@ import (
 
 	"github.com/asppj/dem-client/backend"
 	apppost "github.com/asppj/dem-client/backend/AppPost"
+	supervisor "github.com/asppj/dem-client/backend/supervisor"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 )
@@ -40,6 +41,7 @@ func main() {
 		Bind: []interface{}{
 			app,
 			&apppost.AppPost{},
+			supervisor.NewService(),
 		},
 	})
 

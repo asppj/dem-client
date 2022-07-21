@@ -53,5 +53,11 @@ func TestCmdRunner(t *testing.T) {
 			return
 		}
 		Success("%s:%s\n", hostName, b)
+		ok, err := host.ExistFile("/var/prometheus/prometheus")
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		Success("%s: 文件是否存在：%v\n", hostName, ok)
 	}
 }
