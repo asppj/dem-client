@@ -5,7 +5,10 @@ go 1.17
 require (
 	github.com/antlabs/pcurl v0.0.7
 	github.com/gin-gonic/gin v1.8.1
+	github.com/logrusorgru/aurora v0.0.0-20181002194514-a7b3b318ed4e
 	github.com/wailsapp/wails/v2 v2.0.0-beta.38
+	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
+	gopkg.in/ini.v1 v1.66.6
 )
 
 require (
@@ -40,7 +43,6 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.1 // indirect
 	github.com/wailsapp/mimetype v1.4.1 // indirect
-	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
 	golang.org/x/net v0.0.0-20211015210444-4f30a5c0130f // indirect
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
 	golang.org/x/text v0.3.7 // indirect
