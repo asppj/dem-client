@@ -48,7 +48,7 @@ function CardCtl(props: { project: string, hosts: string[], actions: string[] })
 			<div className={cardClass}>
 				{/* <Switch checked={!loading} onChange={onChange} /> */}
 				<Card
-					style={{ width: 550, marginTop: 16 }}
+					style={{ width: 550 }}
 					actions={actions}
 				>
 					<Skeleton loading={loading} avatar active>
