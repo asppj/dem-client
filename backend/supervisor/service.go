@@ -12,8 +12,8 @@ import (
 
 var (
 	projectDem = []string{
-		"~/.dem/appserver.prod.yaml",
-		"~/.dem/appserver.dev.yaml",
+		"/Users/liusp/.dem/appserver.prod.yaml",
+		"/Users/liusp/.dem/appserver.dev.yaml",
 	}
 )
 
@@ -32,13 +32,14 @@ func (s *Service) LoadConf() []string {
 	return projectDem
 }
 
-func (s *Service) Projects(confFile string) ([]CtlConf, error) {
+func (s *Service) Projects(confFile string) (Projects, error) {
 	tagOption := goconfig.NewSampleTagOption()
 	tagOption.IDTag = "yaml"
-	c := &Projects{}
-	err := goconfig.Load(c, goconfig.Conf{
+	c := Projects{}
+	err := goconfig.Load(&c, goconfig.Conf{
 		FileDefaultFilename: confFile,
 		FlagDisable:         true, // 禁用命令行参数
+		EnvDisable:          true,
 		TagOption:           tagOption,
 	})
 	if err != nil {
@@ -48,10 +49,14 @@ func (s *Service) Projects(confFile string) ([]CtlConf, error) {
 	if err = v.Struct(c); err != nil {
 		panic(fmt.Errorf("validate server file [%s] error: %v", confFile, err))
 	}
-	return c.Supervisor, nil
+	return c, nil
 }
 
-func (s *Service) RunCmd(project string, hosts []string, cmd string) (out []string, err error) {
+func (s *Service) RunCmd(project string, hosts []string, ctl string) (out []string, err error) {
+	cmd, err := ParseCtl(project, ctl)
+	if err != nil {
+		return out, err
+	}
 	for i, host := range hosts {
 		s.logger.Print(fmt.Sprintf(" %d/%d 项目：%s, host:%s, 执行命令：%s", i+1, len(hosts), project, host, cmd))
 		runner, err := cmdrunner.NewRunner(host)

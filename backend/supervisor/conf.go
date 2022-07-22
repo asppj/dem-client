@@ -1,19 +1,47 @@
 package supervisor
 
+import (
+	"bytes"
+	"text/template"
+)
+
 type (
 	CtlConf struct {
-		Project   string   `json:"project"` // 项目名
-		SecretKey string   `json:"secret_key"`
-		Hosts     []string `json:"host" valid:"required"`
-		TailLog   string   `json:"tailLog" default:"sudo supervisorctl tail -f {{.project}}"`
-		RunLog    string   `json:"runLog" default:"tail -f /mnt/log/{{.project}}/app.log"`
-		Restart   string   `json:"restart" default:"sudo supervisorctl restart {{.project}}"`
-		Stop      string   `json:"stop" default:"sudo supervisorctl stop {{.project}}"`
-		Start     string   `json:"start" default:"sudo supervisorctl start {{.project}}"`
-		DryRun    string   `json:"dryRun" default:"/var/{{.project}}/{{.project}} -c /var/{{.project}}/config.yaml -d"`
+		TailLog string `yaml:"tailLog" default:"sudo supervisorctl tail -f {{.Project}}"`
+		RunLog  string `yaml:"runLog" default:"tail -f /mnt/log/{{.Project}}/app.log"`
+		Status  string `yaml:"status" default:"sudo supervisorctl status {{.Project}}"`
+		Restart string `yaml:"restart" default:"sudo supervisorctl restart {{.Project}}"`
+		Stop    string `yaml:"stop" default:"sudo supervisorctl stop {{.Project}}"`
+		Start   string `yaml:"start" default:"sudo supervisorctl start {{.Project}}"`
+		DryRun  string `yaml:"dryRun" default:"/var/{{.Project}}/{{.Project}} -c /var/{{.Project}}/config.yaml -d"`
+		Version string `yaml:"version" default:"/var/{{.Project}}/{{.Project}} -v"`
 	}
-
+	Project struct {
+		Project   string   `yaml:"project" valyaml:"required" json:"project"` // 项目名
+		SecretKey string   `yaml:"secret_key" json:"secret_key"`
+		Hosts     []string `yaml:"hosts" valyaml:"required"`
+	}
 	Projects struct {
-		Supervisor []CtlConf `json:"supervisor"`
+		Supervisor []Project `yaml:"supervisor"`
+		App        string    `yaml:"app" default:"dem"`
+		AppCommand CtlConf   `yaml:"appCommand"`
 	}
 )
+
+func ParseCtl(project string, ctl string) (cmd string, err error) {
+	return ParseCmd(Project{Project: project}, ctl)
+}
+
+func ParseCmd(project Project, ctl string) (cmd string, err error) {
+	tmpl, err := template.New("demo1").Parse(ctl)
+	if err != nil {
+		return "", err
+	}
+	buf := make([]byte, 0, 1024)
+	buff := bytes.NewBuffer(buf)
+	err = tmpl.Execute(buff, project)
+	if err != nil {
+		return "", err
+	}
+	return buff.String(), nil
+}

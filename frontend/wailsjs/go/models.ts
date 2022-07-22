@@ -1,36 +1,3 @@
-export namespace supervisor {
-	
-	export class CtlConf {
-	    project: string;
-	    secret_key: string;
-	    host: string[];
-	    tailLog: string;
-	    runLog: string;
-	    restart: string;
-	    stop: string;
-	    start: string;
-	    dryRun: string;
-	
-	    static createFrom(source: any = {}) {
-	        return new CtlConf(source);
-	    }
-	
-	    constructor(source: any = {}) {
-	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.project = source["project"];
-	        this.secret_key = source["secret_key"];
-	        this.host = source["host"];
-	        this.tailLog = source["tailLog"];
-	        this.runLog = source["runLog"];
-	        this.restart = source["restart"];
-	        this.stop = source["stop"];
-	        this.start = source["start"];
-	        this.dryRun = source["dryRun"];
-	    }
-	}
-
-}
-
 export namespace apppost {
 	
 	export class AppHeader {
