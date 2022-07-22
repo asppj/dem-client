@@ -7,8 +7,8 @@ import (
 
 type (
 	CtlConf struct {
-		TailLog string `yaml:"tailLog" default:"sudo supervisorctl tail -f {{.Project}}"`
-		RunLog  string `yaml:"runLog" default:"tail -f /mnt/log/{{.Project}}/app.log"`
+		TailLog string `yaml:"tailLog" default:"sudo supervisorctl tail  {{.Project}}"`
+		RunLog  string `yaml:"runLog" default:"tail /mnt/log/{{.Project}}/app.log"`
 		Status  string `yaml:"status" default:"sudo supervisorctl status {{.Project}}"`
 		Restart string `yaml:"restart" default:"sudo supervisorctl restart {{.Project}}"`
 		Stop    string `yaml:"stop" default:"sudo supervisorctl stop {{.Project}}"`
@@ -17,14 +17,14 @@ type (
 		Version string `yaml:"version" default:"/var/{{.Project}}/{{.Project}} -v"`
 	}
 	Project struct {
-		Project   string   `yaml:"project" valyaml:"required" json:"project"` // 项目名
+		Project   string   `yaml:"project"  json:"project"` // 项目名
 		SecretKey string   `yaml:"secret_key" json:"secret_key"`
-		Hosts     []string `yaml:"hosts" valyaml:"required"`
+		Hosts     []string `json:"hosts" yaml:"hosts"`
 	}
 	Projects struct {
-		Supervisor []Project `yaml:"supervisor"`
-		App        string    `yaml:"app" default:"dem"`
-		AppCommand CtlConf   `yaml:"appCommand"`
+		Supervisor []Project `yaml:"supervisor" json:"supervisor"`
+		App        string    `yaml:"app" json:"app" default:"dem"`
+		AppCommand CtlConf   `yaml:"appCommand" json:"appCommand"`
 	}
 )
 

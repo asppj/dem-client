@@ -20,7 +20,7 @@ func secureHostKey() ssh.HostKeyCallback {
 }
 func NewSSH(hostname, port, username, password, sshPrivateRsa string) (*RemoteSSH, error) {
 	config := &ssh.ClientConfig{
-		Timeout:         3 * time.Second, // ssh 连接time out 时间一秒钟, 如果ssh验证错误 会在一秒内返回
+		Timeout:         180 * time.Second, // ssh 连接time out 时间一秒钟, 如果ssh验证错误 会在一秒内返回
 		User:            username,
 		HostKeyCallback: secureHostKey(), // 自定义校验
 		// HostKeyCallback: hostKeyCallBackFunc(h.Host),
