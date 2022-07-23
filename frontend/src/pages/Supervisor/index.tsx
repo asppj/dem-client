@@ -1,15 +1,18 @@
 import { openNotificationWithIcon } from '@/utils/notice'
-import { Select } from 'antd'
+import { Button, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { LoadConf, Projects } from '../../../wailsjs/go/supervisor/Service'
 import { supervisor } from '../../../wailsjs/go/models';
 import CardCtl from './card';
+import { RedoOutlined } from '@ant-design/icons';
+import { time } from 'console';
 const { Option } = Select;
 
 function SupervisorPage() {
 	const [cfgFileList, setCfgFileList] = useState<string[]>([])
-	const [cfgFile,setCfgFile]=useState("")
+	const [cfgFile, setCfgFile] = useState("")
 	const [projects, setProjects] = useState<supervisor.Projects>();
+	const [timeNow, setTimeNow] = useState("")
 	useEffect(() => {
 		// 加载配置文件
 		LoadConf().then((conf) => {
@@ -27,7 +30,7 @@ function SupervisorPage() {
 		// 加载项目
 		if (cfgFile != "") {
 			Projects(cfgFile).then((res) => {
-				console.log(res)
+				console.log("更新projects", res)
 				if ("app" in res) {
 					console.log("切换配置：", cfgFile, res)
 					setProjects(res)
@@ -46,21 +49,24 @@ function SupervisorPage() {
 	}
 	return (
 		<div>
-			<Select defaultValue="选择配置" onChange={(selected) => { handlerSelectCfg(selected) }}>
-				<Option value="选择配置" disabled>选择配置</Option>
-				{cfgFileList.map((conf) => {
-					return (
-						<Option value={conf}>{conf}</Option>
-					)
-				})}
-			</Select>
-			<div className="grid grid-cols-2 text-center" key={cfgFile}>
+			<div className="space-x-2">
+				<Select defaultValue="选择配置" onChange={(selected) => {handlerSelectCfg(selected) }}>
+					<Option value="选择配置" disabled>选择配置</Option>
+					{cfgFileList.map((conf) => {
+						return (
+							<Option value={conf}>{conf}</Option>
+						)
+					})}
+				</Select>
+				<Button shape="circle" type="primary" onClick={() => {setTimeNow(Date.now().toString());handlerSelectCfg(cfgFile)}} icon={<RedoOutlined />} ></Button>
+			</div>
+			<div className="grid grid-cols-1 2lg:grid-cols-2 text-center" key={cfgFile + timeNow}>
 				{
-					projects && projects.supervisor? projects.supervisor.map((project) => {
+					projects && projects.supervisor ? projects.supervisor.map((project) => {
 						return (<>
-							<CardCtl key={project.project} project={project.project} hosts={project.hosts} actions={projects.appCommand} ></CardCtl>
+							<CardCtl key={project.project + timeNow} project={project.project} hosts={project.hosts} actions={projects.appCommand} />
 						</>)
-					}):<span className=" justify-center p-48 ring-0 shadow m-6"> empty config file</span>
+					}) : <span className=" justify-center p-48 ring-0 shadow m-6"> empty config file</span>
 				}
 			</div>
 		</div>

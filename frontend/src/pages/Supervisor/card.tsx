@@ -53,6 +53,11 @@ function CardCtl(props: { project: string, hosts: string[], actions: string[] })
 			</Tooltip>
 		)
 	})
+	// click handler button 
+	const handlerClickButton = (selectedIdx: number, action: string) => {
+		handlerRunShell(props.project, [props.hosts[selectedIdx]], (props.actions as any)[action])
+	}
+
 	return (
 		<div className="flex shadow-md rounded p-1 pb-10">
 			<div className={cardClass}>
@@ -78,6 +83,16 @@ function CardCtl(props: { project: string, hosts: string[], actions: string[] })
 														<Checkbox className="h-auto p-auto" defaultChecked={e.checked} onChange={(e) => { handlerChangeSelectedHost(e.target.checked, idx) }}>
 														</Checkbox>
 														<CardStatus project={props.project} host={e.host} ctl={(props.actions as any).Status} />
+														<Button.Group className="gap-2">
+															<Button.Group className="gap-0">
+																<Button className="" size="small" type="primary" onClick={() => { handlerClickButton(idx, "DryRun") }}>DryRun</Button>
+																<Button className="" size="small" type="default" onClick={() => { handlerClickButton(idx, "Version") }}>Version</Button>
+															</Button.Group>
+															<Button.Group className="gap-0">
+																<Button className="" size="small" type="default">Start</Button>
+																<Button className="" size="small" type="dashed" danger>Stop</Button>
+															</Button.Group>
+														</Button.Group>
 													</div>
 												</>
 											)
@@ -90,7 +105,7 @@ function CardCtl(props: { project: string, hosts: string[], actions: string[] })
 					</Skeleton>
 				</Card>
 				{
-					logSpan&&logSpan.length>0 ?
+					logSpan && logSpan.length > 0 ?
 						<div className="shadow bg-white p-2 mt-1 rounded">
 							{logSpan.map((e, i) => {
 								return (
