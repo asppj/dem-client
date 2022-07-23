@@ -1,40 +1,47 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "build",
-      "type": "shell",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "command": "go",
-      "args": [
-        "build",
-        "-tags",
-        "production,desktop",
-        "-gcflags",
-        "all=-N -l",
-        "-o",
-        "build/bin/dem-client"
-      ]
-    },
-    {
-      "label": "build debug",
-      "type": "shell",
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "command": "go",
-      "args": [
-        "build",
-        "-tags",
-        "production,desktop,debug",
-        "-gcflags",
-        "all=-N -l",
-        "-o",
-        "build/bin/dem-client"
-      ]
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"type": "shell",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"command": "go",
+			"args": [
+				"build",
+				"-tags",
+				"production,desktop",
+				"-gcflags",
+				"all=-N -l",
+				"-o",
+				"build/bin/dem-client"
+			]
+		},
+		{
+			"label": "build debug",
+			"type": "shell",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"osx": {
+				"options": {
+					"cwd": "${workspaceFolder}",
+					"env": {
+						"CGO_LDFLAGS": "-framework UniformTypeIdentifiers",
+					}
+				}
+			},
+			"command": "go",
+			"args": [
+				"build",
+				"-tags",
+				"production,desktop,debug",
+				"-gcflags",
+				"all=-N -l",
+				"-o",
+				"build/bin/dem-client"
+			]
+		}
+	]
 }
-  

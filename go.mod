@@ -8,6 +8,7 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-playground/validator/v10 v10.10.0
 	github.com/logrusorgru/aurora v0.0.0-20181002194514-a7b3b318ed4e
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/wailsapp/wails/v2 v2.0.0-beta.38
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
 	gopkg.in/ini.v1 v1.66.6
