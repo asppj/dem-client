@@ -3,6 +3,7 @@ import { Skeleton, Avatar, Card, Tooltip, Button, Radio, Select, Switch, Checkbo
 import { RunCmd } from '../../../wailsjs/go/supervisor/Service';
 import { openNotificationWithIcon } from '@/utils/notice';
 import CardStatus from './card-status';
+import OkButton from './OkButton';
 
 const { Meta } = Card;
 
@@ -44,13 +45,12 @@ function CardCtl(props: { project: string, hosts: string[], actions: string[] })
 	}
 
 	// actions 
-	const actions = Object.keys(props.actions).map((action, index) => {
+	// const actions = Object.keys(props.actions).map((action, index) => {
+	const actions = Object.keys(props.actions).filter(action => { return ["Status", "Restart"].includes(action) }).map((action, index) => {
 		// console.log("action.map", index, action)
 		const ctl = (props.actions as any)[action]
 		return (
-			<Tooltip title={ctl} key={action}>
-				<Button type="primary" size="small" onClick={() => { handlerRunShell(props.project, selectedHostIdx.filter((e) => { return e.checked }).map(e => e.host), ctl) }} >{action}</Button>
-			</Tooltip>
+			<OkButton type="default" danger={index%2!=0} size="middle" content={action} description={`${ctl}`} onClick={() => { handlerRunShell(props.project, selectedHostIdx.filter((e) => { return e.checked }).map(e => e.host), ctl) }} />
 		)
 	})
 	// click handler button 
@@ -85,12 +85,18 @@ function CardCtl(props: { project: string, hosts: string[], actions: string[] })
 														<CardStatus project={props.project} host={e.host} ctl={(props.actions as any).Status} />
 														<Button.Group className="gap-2">
 															<Button.Group className="gap-0">
+																<Tooltip title={"查看supervisor日志"} key="TailLog">
+																	<Button className="" size="small" type="primary" onClick={() => { handlerClickButton(idx, "TailLog") }}>TailLog</Button>
+																</Tooltip>
+																<Tooltip title={"查看app.log"} key="RunLog">
+																	<Button className="" size="small" type="default" onClick={() => { handlerClickButton(idx, "RunLog") }}>RunLog</Button>
+																</Tooltip>
 																<Button className="" size="small" type="primary" onClick={() => { handlerClickButton(idx, "DryRun") }}>DryRun</Button>
 																<Button className="" size="small" type="default" onClick={() => { handlerClickButton(idx, "Version") }}>Version</Button>
 															</Button.Group>
 															<Button.Group className="gap-0">
-																<Button className="" size="small" type="default">Start</Button>
-																<Button className="" size="small" type="dashed" danger>Stop</Button>
+																<OkButton className="" size="small" type="primary" content="Start" description="启动服务" danger onClick={() => { handlerClickButton(idx, "Start") }} />
+																<OkButton className="" size="small" type="default" content="Stop" description="停止服务" danger onClick={() => { handlerClickButton(idx, "Stop") }} />
 															</Button.Group>
 														</Button.Group>
 													</div>

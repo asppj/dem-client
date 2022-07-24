@@ -6,6 +6,7 @@ import { supervisor } from '../../../wailsjs/go/models';
 import CardCtl from './card';
 import { RedoOutlined } from '@ant-design/icons';
 import { time } from 'console';
+import TagCard from './tag';
 const { Option } = Select;
 
 function SupervisorPage() {
@@ -50,7 +51,7 @@ function SupervisorPage() {
 	return (
 		<div>
 			<div className="space-x-2">
-				<Select defaultValue="选择配置" onChange={(selected) => {handlerSelectCfg(selected) }}>
+				<Select defaultValue="选择配置" onChange={(selected) => { handlerSelectCfg(selected) }}>
 					<Option value="选择配置" disabled>选择配置</Option>
 					{cfgFileList.map((conf) => {
 						return (
@@ -58,7 +59,10 @@ function SupervisorPage() {
 						)
 					})}
 				</Select>
-				<Button shape="circle" type="primary" onClick={() => {setTimeNow(Date.now().toString());handlerSelectCfg(cfgFile)}} icon={<RedoOutlined />} ></Button>
+				<Button shape="circle" type="primary" onClick={() => { setTimeNow(Date.now().toString()); handlerSelectCfg(cfgFile) }} icon={<RedoOutlined />} ></Button>
+				{
+					projects && projects.app && <TagCard tag={projects?.app || ""}></TagCard>
+				}
 			</div>
 			<div className="grid grid-cols-1 2lg:grid-cols-2 text-center" key={cfgFile + timeNow}>
 				{
