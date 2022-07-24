@@ -7,6 +7,7 @@ import CardCtl from './card';
 import { RedoOutlined } from '@ant-design/icons';
 import { time } from 'console';
 import TagCard from './tag';
+import YamlModal from './yaml';
 const { Option } = Select;
 
 function SupervisorPage() {
@@ -62,6 +63,9 @@ function SupervisorPage() {
 				<Button shape="circle" type="primary" onClick={() => { setTimeNow(Date.now().toString()); handlerSelectCfg(cfgFile) }} icon={<RedoOutlined />} ></Button>
 				{
 					projects && projects.app && <TagCard tag={projects?.app || ""}></TagCard>
+				}
+				{
+					projects && <YamlModal title="查看配置" yamlObj={projects} placeholder={cfgFile}></YamlModal>
 				}
 			</div>
 			<div className="grid grid-cols-1 2lg:grid-cols-2 text-center" key={cfgFile + timeNow}>
