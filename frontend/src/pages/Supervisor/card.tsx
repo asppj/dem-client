@@ -32,7 +32,7 @@ function CardCtl(props: { project: string, hosts: string[], actions: string[] })
 					openNotificationWithIcon("success", "runShell", `${name}/${host}/${ctl}`)
 				})
 			}
-		}).catch(err => { console.error(err); openNotificationWithIcon("error", "runShell", err) })
+		}).catch(err => { console.error(err); setLogSpan([err]); openNotificationWithIcon("error", "runShell", err) })
 	}
 
 	// 选中host
@@ -50,7 +50,7 @@ function CardCtl(props: { project: string, hosts: string[], actions: string[] })
 		// console.log("action.map", index, action)
 		const ctl = (props.actions as any)[action]
 		return (
-			<OkButton type="default" danger={index%2!=0} size="middle" content={action} description={`${ctl}`} onClick={() => { handlerRunShell(props.project, selectedHostIdx.filter((e) => { return e.checked }).map(e => e.host), ctl) }} />
+			<OkButton type="default" danger={index % 2 != 0} size="middle" content={action} description={`${ctl}`} onClick={() => { handlerRunShell(props.project, selectedHostIdx.filter((e) => { return e.checked }).map(e => e.host), ctl) }} />
 		)
 	})
 	// click handler button 
