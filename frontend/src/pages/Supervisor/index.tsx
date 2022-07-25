@@ -1,6 +1,6 @@
 import { openNotificationWithIcon } from '@/utils/notice'
 import { Button, Select } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LoadConf, Projects } from '../../../wailsjs/go/supervisor/Service'
 import { supervisor } from '../../../wailsjs/go/models';
 import CardCtl from './card';
