@@ -13,7 +13,7 @@ function SupervisorPage() {
 	const [cfgFileList, setCfgFileList] = useState<string[]>([])
 	const [cfgFile, setCfgFile] = useState("")
 	const [projects, setProjects] = useState<supervisor.Projects>();
-	const [timeNow, setTimeNow] = useState("")
+	const [timeNow, setTimeNow] = useState(Date.now().toString())
 	useEffect(() => {
 		// 加载配置文件
 		LoadConf().then((conf) => {
