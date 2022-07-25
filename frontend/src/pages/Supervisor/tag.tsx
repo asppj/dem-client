@@ -1,7 +1,6 @@
 import { hashFnv32a } from '@/utils/hash';
 import { Tag } from 'antd';
-import React from 'react'
-import { Md5 } from 'ts-md5/dist/md5';
+
 
 const tags = [
 	"magenta",

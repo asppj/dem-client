@@ -1,7 +1,7 @@
 import { Button, Popconfirm, Tooltip } from 'antd';
 import { ButtonType } from 'antd/lib/button';
 import { SizeType } from 'antd/lib/config-provider/SizeContext';
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 function OkButton(props: { onClick: () => void, content: string, description: string, className?: string, type: ButtonType, size: SizeType,danger?:boolean }) {
 	const [visible, setVisible] = useState(false);

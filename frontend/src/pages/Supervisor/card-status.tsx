@@ -13,7 +13,7 @@ const CardStatus = (props: { project: string, host: string, ctl: string }) => {
 			}
 		}).catch(err => {
 			console.error(err);
-			openNotificationWithIcon("error", "CardStatus", err)
+			// openNotificationWithIcon("error", "CardStatus", err)
 		})
 	}
 	useEffect(() => {

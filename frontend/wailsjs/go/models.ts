@@ -1,3 +1,59 @@
+export namespace supervisor {
+	
+	export class Project {
+	    project: string;
+	    secret_key: string;
+	    hosts: string[];
+	
+	    static createFrom(source: any = {}) {
+	        return new Project(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.project = source["project"];
+	        this.secret_key = source["secret_key"];
+	        this.hosts = source["hosts"];
+	    }
+	}
+	export class Projects {
+	    supervisor: Project[];
+	    app: string;
+	    // Go type: CtlConf
+	    appCommand: any;
+	
+	    static createFrom(source: any = {}) {
+	        return new Projects(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.supervisor = this.convertValues(source["supervisor"], Project);
+	        this.app = source["app"];
+	        this.appCommand = this.convertValues(source["appCommand"], null);
+	    }
+	
+		convertValues(a: any, classs: any, asMap: boolean = false): any {
+		    if (!a) {
+		        return a;
+		    }
+		    if (a.slice) {
+		        return (a as any[]).map(elem => this.convertValues(elem, classs));
+		    } else if ("object" === typeof a) {
+		        if (asMap) {
+		            for (const key of Object.keys(a)) {
+		                a[key] = new classs(a[key]);
+		            }
+		            return a;
+		        }
+		        return new classs(a);
+		    }
+		    return a;
+		}
+	}
+
+}
+
 export namespace apppost {
 	
 	export class AppHeader {
@@ -80,62 +136,6 @@ export namespace apppost {
 	        this.headers = this.convertValues(source["headers"], ResponseHeader);
 	        this.is_json = source["is_json"];
 	        this.response = source["response"];
-	    }
-	
-		convertValues(a: any, classs: any, asMap: boolean = false): any {
-		    if (!a) {
-		        return a;
-		    }
-		    if (a.slice) {
-		        return (a as any[]).map(elem => this.convertValues(elem, classs));
-		    } else if ("object" === typeof a) {
-		        if (asMap) {
-		            for (const key of Object.keys(a)) {
-		                a[key] = new classs(a[key]);
-		            }
-		            return a;
-		        }
-		        return new classs(a);
-		    }
-		    return a;
-		}
-	}
-
-}
-
-export namespace supervisor {
-	
-	export class Project {
-	    project: string;
-	    secret_key: string;
-	    hosts: string[];
-	
-	    static createFrom(source: any = {}) {
-	        return new Project(source);
-	    }
-	
-	    constructor(source: any = {}) {
-	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.project = source["project"];
-	        this.secret_key = source["secret_key"];
-	        this.hosts = source["hosts"];
-	    }
-	}
-	export class Projects {
-	    supervisor: Project[];
-	    app: string;
-	    // Go type: CtlConf
-	    appCommand: any;
-	
-	    static createFrom(source: any = {}) {
-	        return new Projects(source);
-	    }
-	
-	    constructor(source: any = {}) {
-	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.supervisor = this.convertValues(source["supervisor"], Project);
-	        this.app = source["app"];
-	        this.appCommand = this.convertValues(source["appCommand"], null);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
