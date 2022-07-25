@@ -5,7 +5,6 @@ import { LoadConf, Projects } from '../../../wailsjs/go/supervisor/Service'
 import { supervisor } from '../../../wailsjs/go/models';
 import CardCtl from './card';
 import { RedoOutlined } from '@ant-design/icons';
-import { time } from 'console';
 import TagCard from './tag';
 import YamlModal from './yaml';
 const { Option } = Select;

@@ -8,12 +8,12 @@ import (
 type (
 	CtlConf struct {
 		TailLog string `yaml:"tailLog" default:"sudo supervisorctl tail  {{.Project}}"`
-		RunLog  string `yaml:"runLog" default:"tail /mnt/log/{{.Project}}/app.log"`
+		RunLog  string `yaml:"runLog" default:"sudo tail /mnt/log/{{.Project}}/app.log"`
 		Status  string `yaml:"status" default:"sudo supervisorctl status {{.Project}}"`
 		Restart string `yaml:"restart" default:"sudo supervisorctl restart {{.Project}}"`
 		Stop    string `yaml:"stop" default:"sudo supervisorctl stop {{.Project}}"`
 		Start   string `yaml:"start" default:"sudo supervisorctl start {{.Project}}"`
-		DryRun  string `yaml:"dryRun" default:"/var/{{.Project}}/{{.Project}} -c /var/{{.Project}}/config.yaml -d"`
+		DryRun  string `yaml:"dryRun" default:"cd /var/{{.Project}}/ && sudo /var/{{.Project}}/{{.Project}} -c /var/{{.Project}}/config.yaml -d"`
 		Version string `yaml:"version" default:"/var/{{.Project}}/{{.Project}} -v"`
 	}
 	Project struct {

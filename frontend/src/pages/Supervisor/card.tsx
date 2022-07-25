@@ -112,7 +112,7 @@ function CardCtl(props: { project: string, hosts: string[], actions: string[] })
 				</Card>
 				{
 					logSpan && logSpan.length > 0 ?
-						<div className="shadow bg-white p-2 mt-1 rounded whitespace-pre-line">
+						<div className="shadow bg-white p-2 mt-1 rounded whitespace-pre-line overflow-scroll h-48">
 							{logSpan.map((e, i) => {
 								return (
 									<div className="text-start flex flex-row">
