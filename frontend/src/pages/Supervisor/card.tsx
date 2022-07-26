@@ -59,7 +59,7 @@ function CardCtl(props: { project: string, hosts: string[], actions: string[] })
 	}
 
 	return (
-		<div className="flex shadow-md rounded p-1 pb-10">
+		<div className="flex shadow-md rounded p-1 pb-10" key={props.project}>
 			<div className={cardClass}>
 				{/* <Switch checked={!loading} onChange={onChange} /> */}
 				<Card
