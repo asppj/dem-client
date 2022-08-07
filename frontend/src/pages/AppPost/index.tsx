@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { MkCurl, AppPost as AppPostRequest, ParseCurl } from '../../../wailsjs/go/apppost/AppPost'
 import { Refresh } from '../svgs'
-import CodeEditor, { JsonView, ResponseView } from './code'
+import CodeEditor from './code'
 import HeadersPost from './headers'
 import { AppPostNS } from './interface'
 import SelectInput from './select'
 import { apppost } from '../../../wailsjs/go/models'
 import ModalButton from './modal'
-import { Input, notification } from 'antd';
 import { openNotificationWithIcon } from '@/utils/notice'
 
 const methods = [
@@ -81,7 +80,7 @@ function AppPost() {
 	}
 	// 粘贴curl语句
 	const parseCurl = (text: string) => {
-		console.log("粘贴:",text);
+		console.log("粘贴:", text);
 		if (text.length < 4) {
 			return
 		}

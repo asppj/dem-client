@@ -13,3 +13,12 @@ browser and connect to your application.
 ## Building
 
 To build a redistributable, production mode package, use `wails build`.
+
+
+```
+objectset.rio.cattle.io/owner-name: kubesphere-router-kubesphere-system
+objectset.rio.cattle.io/owner-namespace: kubesphere-controls-system
+```
+
+objectset.rio.cattle.io/owner-name: apisix-ingress-controller-66d8d95646
+objectset.rio.cattle.io/owner-namespace: ngress-apisix
