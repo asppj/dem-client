@@ -8,6 +8,7 @@ import (
 	supervisor "github.com/asppj/dem-client/backend/supervisor"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
+	"github.com/wailsapp/wails/v2/pkg/options/mac"
 )
 
 //go:embed frontend/dist
@@ -18,7 +19,11 @@ func main() {
 	app := NewApp()
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:             "Dem Client",
+		Title: "Dem Client",
+		Mac: &mac.Options{
+			WindowIsTranslucent: true,
+			// Appearance:          mac.NSAppearanceNameVibrantLight,
+		},
 		Width:             1280,
 		Height:            980,
 		DisableResize:     false,

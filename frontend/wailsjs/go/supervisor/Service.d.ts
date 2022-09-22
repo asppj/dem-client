@@ -4,6 +4,6 @@ import {supervisor} from '../models';
 
 export function LoadConf():Promise<Array<string>>;
 
-export function Projects(arg1:string):Promise<supervisor.Projects|Error>;
+export function Projects(arg1:string):Promise<supervisor.Projects>;
 
-export function RunCmd(arg1:string,arg2:Array<string>,arg3:string):Promise<Array<string>|Error>;
+export function RunCmd(arg1:string,arg2:Array<string>,arg3:string):Promise<Array<string>>;

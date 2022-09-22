@@ -41,7 +41,7 @@ function SupervisorPage() {
 					}
 					return
 				}
-				openNotificationWithIcon("error", "Projects", res.message)
+				// openNotificationWithIcon("error", "Projects", res.message)
 			}).catch((e) => {
 				console.log(e);
 				openNotificationWithIcon("error", "Projects", e)

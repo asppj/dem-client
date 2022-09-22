@@ -72,7 +72,7 @@ function AppPost() {
 				openNotificationWithIcon("success", "request成功", res.status_code.toString())
 				setResponse({ response: res.response, is_json: res.is_json, headers: res.headers.map((item) => { return `${item.key}:${item.values.join(',')}` }) })
 			} else {
-				openNotificationWithIcon("error", "request失败", res.message)
+				openNotificationWithIcon("error", "request失败", res.response)
 			}
 		}).catch((e) => {
 			console.log("error:", e)
@@ -98,7 +98,7 @@ function AppPost() {
 				setHeaders(res.headers.map((item) => { return { key: item.key, value: item.value, checked: true } }))
 				openNotificationWithIcon("success", "parse curl", text)
 			} else {
-				openNotificationWithIcon("error", "request失败", res.message)
+				openNotificationWithIcon("error", "request失败", res.body)
 			}
 		}).catch((e) => {
 			console.log("error:", e)
