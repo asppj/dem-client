@@ -41,7 +41,9 @@ function SupervisorPage() {
 					}
 					return
 				}
-				openNotificationWithIcon("error", "Projects", res.message)
+				console.log("更新projects:", res)
+				openNotificationWithIcon("error", "Projects", "console打印了错误")
+
 			}).catch((e) => {
 				console.log(e);
 				openNotificationWithIcon("error", "Projects", e)

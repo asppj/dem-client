@@ -17,10 +17,10 @@ function SelectInput(props: { values: string[], selected: string, select: React.
       ease-in-out
       m-0
 			h-10
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" onChange={props.select}>
+      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" onChange={props.select} defaultValue={props.values[0]||""}>
 				{
 					props.values.map((value: string) => {
-						return (<option value={value} className="text-clip" selected={value === props.selected} key={value}>{value}</option>)
+						return (<option value={value} className="text-clip"  key={value}>{value}</option>)
 					})
 				}
 			</select>

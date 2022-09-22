@@ -1,8 +1,5 @@
-import { useState } from 'react';
 import logo from '../../assets/images/logo-universal.png';
 import './index.css';
-import { Greet } from "../../../wailsjs/go/main/App";
-import { Button } from 'antd'
 
 // // home
 // const Home = () => {
@@ -28,7 +25,6 @@ import { Button } from 'antd'
 // 	</div>
 // }
 
-import React from 'react'
 // import MyDisclosure from './components/demo';
 
 export default function Home() {

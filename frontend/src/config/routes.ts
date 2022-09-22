@@ -1,11 +1,11 @@
 import { lazy } from 'react'
 import HomeSVG from '../pages/svgs'
-import AppPOST from '../pages/AppPost'
+// import AppPOST from '../pages/AppPost'
 import SupervisorPage from '../pages/Supervisor'
 export const Home = lazy(() => import('../pages/home'))
 export const About = lazy(() => import('../pages/about'))
 export const NotFound = lazy(() => import('../pages/layout/404'))
-// export const AppPOST = lazy(() => import('../pages/AppPost'))
+export const AppPOST = lazy(() => import('../pages/AppPost'))
 
 const routes = [
 	{

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import { Minus, Plus } from '../svgs'
 import { AppPostNS } from './interface'
 

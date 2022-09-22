@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { MkCurl, AppPost as AppPostRequest, ParseCurl } from '../../../wailsjs/go/apppost/AppPost'
 import { Refresh } from '../svgs'
-import CodeEditor, { JsonView, ResponseView } from './code'
+import CodeEditor from './code'
 import HeadersPost from './headers'
 import { AppPostNS } from './interface'
 import SelectInput from './select'
 import { apppost } from '../../../wailsjs/go/models'
 import ModalButton from './modal'
-import { Input, notification } from 'antd';
 import { openNotificationWithIcon } from '@/utils/notice'
 
 const methods = [
@@ -72,7 +71,8 @@ function AppPost() {
 				openNotificationWithIcon("success", "request成功", res.status_code.toString())
 				setResponse({ response: res.response, is_json: res.is_json, headers: res.headers.map((item) => { return `${item.key}:${item.values.join(',')}` }) })
 			} else {
-				openNotificationWithIcon("error", "request失败", res.message)
+				console.log("res:", res)
+				openNotificationWithIcon("error", "request失败", res.toString())
 			}
 		}).catch((e) => {
 			console.log("error:", e)
@@ -81,7 +81,7 @@ function AppPost() {
 	}
 	// 粘贴curl语句
 	const parseCurl = (text: string) => {
-		console.log("粘贴:",text);
+		console.log("粘贴:", text);
 		if (text.length < 4) {
 			return
 		}
@@ -98,7 +98,8 @@ function AppPost() {
 				setHeaders(res.headers.map((item) => { return { key: item.key, value: item.value, checked: true } }))
 				openNotificationWithIcon("success", "parse curl", text)
 			} else {
-				openNotificationWithIcon("error", "request失败", res.message)
+				console.log("ParseCurl.res1.error:", res)
+				openNotificationWithIcon("error", "request失败", "console打印了错误")
 			}
 		}).catch((e) => {
 			console.log("error:", e)
